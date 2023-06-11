@@ -7,6 +7,7 @@
         <x-header>{{ __('Visualizar Cliente') }}</x-header>
         <a href="{{ route('app.customers.index') }}" class="btn btn-secondary mb-auto">{{ __('Voltar') }}</a>
     </div>
+    <x-alerts />
 @stop
 
 @section('content')

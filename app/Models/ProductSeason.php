@@ -5,35 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Customer extends Model
+class ProductSeason extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
-        'legal_name',
-        'date_of_birth',
-        'cpf',
-        'rg',
-        'email',
-        'phone1',
-        'phone2',
-        'zip_code',
-        'address',
-        'number',
-        'complement',
-        'district',
-        'city',
-        'state',
         'active',
-        'observation',
         'created_by',
     ];
 
     protected $casts = [
-        'date_of_birth' => 'datetime',
         'active' => 'boolean',
     ];
 
@@ -41,13 +26,18 @@ class Customer extends Model
     {
         parent::boot();
 
-        static::creating(function ($customer) {
-            $customer->created_by = auth()->id();
+        static::creating(function ($productSeason) {
+            $productSeason->created_by = auth()->id();
         });
     }
 
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
     }
 }

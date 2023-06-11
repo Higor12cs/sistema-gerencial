@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'Gerencial',
+    'title' => 'Ink Vitrine',
     'title_prefix' => '',
-    'title_postfix' => '',
+    'title_postfix' => ' - Ink Vitrine',
 
     /*
     |--------------------------------------------------------------------------
@@ -63,8 +63,8 @@ return [
     |
     */
 
-    'logo' => '<b>Sistema Gerencial</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo' => '<b>Ink Vitrine</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/Logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -86,7 +86,7 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/Logo.png',
             'alt' => 'Auth Logo',
             'class' => '',
             'width' => 50,
@@ -109,7 +109,7 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/Logo.png',
             'alt' => 'Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
@@ -167,12 +167,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-danger',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-danger',
 
     /*
     |--------------------------------------------------------------------------
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/app/dashboard',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -297,6 +297,10 @@ return [
             'topnav_right' => false,
         ],
         [
+            'type'         => 'darkmode-widget',
+            'topnav_right' => true,
+        ],
+        [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
@@ -314,11 +318,33 @@ return [
             'route' => 'app.dashboard.index',
         ],
 
-        ['header' => 'Cadastros'],
+        ['header' => 'Clientes'],
         [
             'text' => 'Clientes',
             'icon' => 'fas fa-fw fa-user',
             'route' => 'app.customers.index',
+        ],
+
+        ['header' => 'Produtos'],
+        [
+            'text' => 'Produtos',
+            'icon' => 'fas fa-fw fa-box',
+            'route' => 'app.products.index'
+        ],
+        [
+            'text' => 'Marcas',
+            'icon' => 'fas fa-fw fa-at',
+            'route' => 'app.product-brands.index',
+        ],
+        [
+            'text' => 'Categorias',
+            'icon' => 'fas fa-fw fa-tag',
+            'route' => 'app.product-categories.index',
+        ],
+        [
+            'text' => 'Temporadas',
+            'icon' => 'fas fa-fw fa-snowflake',
+            'route' => 'app.product-seasons.index',
         ],
     ],
 
