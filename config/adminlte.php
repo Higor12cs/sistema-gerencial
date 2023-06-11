@@ -313,6 +313,13 @@ return [
             'icon' => 'fas fa-fw fa-chart-area',
             'route' => 'app.dashboard.index',
         ],
+
+        ['header' => 'Cadastros'],
+        [
+            'text' => 'Clientes',
+            'icon' => 'fas fa-fw fa-user',
+            'route' => 'app.customers.index',
+        ],
     ],
 
     /*
@@ -417,6 +424,71 @@ return [
                     'type' => 'js',
                     'asset' => false,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
+                ],
+            ],
+        ],
+        'Datatables' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/jquery.dataTables.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/js/dataTables.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'DatatablesPlugins' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.bootstrap4.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.html5.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/js/buttons.print.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/jszip/jszip.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/pdfmake.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/pdfmake/vfs_fonts.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => true,
+                    'location' => 'vendor/datatables-plugins/buttons/css/buttons.bootstrap4.min.css',
                 ],
             ],
         ],

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,5 @@ Auth::routes([
 
 Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::resource('/customers', CustomerController::class);
 });
