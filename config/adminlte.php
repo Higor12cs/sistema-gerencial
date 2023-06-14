@@ -332,19 +332,35 @@ return [
             'route' => 'app.products.index'
         ],
         [
-            'text' => 'Marcas',
-            'icon' => 'fas fa-fw fa-at',
-            'route' => 'app.product-brands.index',
-        ],
-        [
-            'text' => 'Categorias',
-            'icon' => 'fas fa-fw fa-tag',
-            'route' => 'app.product-categories.index',
-        ],
-        [
-            'text' => 'Temporadas',
-            'icon' => 'fas fa-fw fa-snowflake',
-            'route' => 'app.product-seasons.index',
+            'text' => 'Atributos',
+            'icon' => 'fas fa-fw fa-tags',
+            'submenu' => [
+                [
+                    'text' => 'Marcas',
+                    'icon' => 'fas fa-fw fa-at',
+                    'route' => 'app.product-brands.index',
+                ],
+                [
+                    'text' => 'Categorias',
+                    'icon' => 'fas fa-fw fa-tag',
+                    'route' => 'app.product-categories.index',
+                ],
+                [
+                    'text' => 'Temporadas',
+                    'icon' => 'fas fa-fw fa-snowflake',
+                    'route' => 'app.product-seasons.index',
+                ],
+                [
+                    'text' => 'Cores',
+                    'icon' => 'fas fa-fw fa-palette',
+                    'route' => 'app.product-colors.index',
+                ],
+                [
+                    'text' => 'Tamanhos',
+                    'icon' => 'fas fa-fw fa-shirt',
+                    'route' => 'app.product-sizes.index',
+                ],
+            ],
         ],
     ],
 

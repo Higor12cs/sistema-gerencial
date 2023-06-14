@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductBrand;
 use App\Models\ProductCategory;
 use App\Models\ProductSeason;
+use App\Models\ProductVariant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -22,7 +23,7 @@ class ProductController extends Controller
     {
         $products = Product::with('productBrand')->with('productCategory')->with('productSeason')->get();
 
-        return view('app.products.index', compact('products'));
+        return view('app.products.products.index', compact('products'));
     }
 
     /**
@@ -34,7 +35,7 @@ class ProductController extends Controller
         $productCategories = ProductCategory::where('active', true)->orderBy('name')->get();
         $productSeasons = ProductSeason::where('active', true)->orderBy('name')->get();
 
-        return view('app.products.create', compact('productBrands', 'productCategories', 'productSeasons'));
+        return view('app.products.products.create', compact('productBrands', 'productCategories', 'productSeasons'));
     }
 
     /**
@@ -55,8 +56,9 @@ class ProductController extends Controller
         $productBrands = ProductBrand::where('active', true)->orderBy('name')->get();
         $productCategories = ProductCategory::where('active', true)->orderBy('name')->get();
         $productSeasons = ProductSeason::where('active', true)->orderBy('name')->get();
+        $productVariants = ProductVariant::where('product_id', $product->id)->get();
 
-        return view('app.products.show', compact('product', 'productBrands', 'productCategories', 'productSeasons'));
+        return view('app.products.products.show', compact('product', 'productBrands', 'productCategories', 'productSeasons', 'productVariants'));
     }
 
     /**
@@ -67,8 +69,9 @@ class ProductController extends Controller
         $productBrands = ProductBrand::where('active', true)->orderBy('name')->get();
         $productCategories = ProductCategory::where('active', true)->orderBy('name')->get();
         $productSeasons = ProductSeason::where('active', true)->orderBy('name')->get();
+        $productVariants = ProductVariant::where('product_id', $product->id)->get();
 
-        return view('app.products.edit', compact('product', 'productBrands', 'productCategories', 'productSeasons'));
+        return view('app.products.products.edit', compact('product', 'productBrands', 'productCategories', 'productSeasons', 'productVariants'));
     }
 
     /**
