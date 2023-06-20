@@ -7,27 +7,19 @@ use Illuminate\Validation\Rule;
 
 class ProductVariantUpdateRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Handle a passed validation attempt.
-     */
-    protected function passedValidation(): void
+    protected function prepareForValidation(): void
     {
-        $this->replace(['price' => $this->price * 100]);
+        $this->merge([
+            'price' => $this->price * 100,
+            'name' => \Illuminate\Support\Str::upper($this->name),
+        ]);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
     public function rules(): array
     {
         return [

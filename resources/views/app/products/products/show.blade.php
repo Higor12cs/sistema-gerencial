@@ -11,19 +11,19 @@
 @stop
 
 @php
-    $heads = [['label' => __('Código'), 'width' => 10], __('Nome'), __('Cor'), __('Tamanho'), __('Estoque'), ['label' => __('Ativo'), 'width' => 10], ['label' => __('Ações'), 'no-export' => true, 'width' => 5]];
+    $heads = [['label' => __('Código'), 'width' => 10], __('Nome'), __('Cor'), __('Tamanho'), __('Valor'), __('Estoque'), ['label' => __('Ativo'), 'width' => 10], ['label' => __('Ações'), 'no-export' => true, 'width' => 5]];
 
     foreach ($productVariants as $productVariant) {
         $btnShow = '<a href="' . route('app.product-variants.show', $productVariant) . '" class="btn btn-xs btn-default mx-1" title="Visualizar"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
         $btnEdit = '<a href="' . route('app.product-variants.edit', $productVariant) . '" class="btn btn-xs btn-default mx-1" title="Editar"><i class="fa fa-lg fa-fw fa-pen"></i></a>';
 
-        $productVariantsData[] = [$productVariant->id, $productVariant->name, $productVariant->productColor->name ?? '-', $productVariant->productSize->name ?? '-', number_format($productVariant->quantity, 2, ',', '.'), $productVariant->active ? '<span class="badge badge-success">Ativo</span>' : '<span class="badge badge-danger">Desativado</span>', '<nobr>' . $btnShow . $btnEdit . '</nobr>'];
+        $productVariantsData[] = [$productVariant->id, $productVariant->name, $productVariant->productColor->name ?? '-', $productVariant->productSize->name ?? '-', number_format($productVariant->price / 100, 2, ',', '.'), number_format($productVariant->quantity / 100, 2, ',', '.'), $productVariant->active ? '<span class="badge badge-success">Ativo</span>' : '<span class="badge badge-danger">Desativado</span>', '<nobr>' . $btnShow . $btnEdit . '</nobr>'];
     }
 
     $config = [
         'data' => $productVariantsData ?? null,
         'order' => [[0, 'desc']],
-        'columns' => [null, null, null, null, null, null, ['orderable' => false]],
+        'columns' => [null, null, null, null, null, null, null, ['orderable' => false]],
         'searching' => false,
         'info' => false,
         'paging' => false,

@@ -30,13 +30,13 @@
                     <x-adminlte-input name="sku" label="{{ __('Código SKU') }}" placeholder="{{ __('SKU') }}"
                         fgroup-class="col-lg-6" enable-old-support />
 
-                    <x-adminlte-input name="barcode" label="{{ __('Código de Barras') }}" placeholder="{{ __('123') }}"
-                        fgroup-class="col-lg-6" enable-old-support />
+                    <x-adminlte-input name="barcode" label="{{ __('Código de Barras') }}"
+                        placeholder="{{ __('123') }}" fgroup-class="col-lg-6" enable-old-support />
                 </div>
 
                 <div class="row">
-                    <x-adminlte-input name="price" label="{{ __('Valor Venda') }}" placeholder="{{ __('Preço') }}"
-                        fgroup-class="col-12" enable-old-support />
+                    <x-adminlte-input name="price" type="number" step="any" label="{{ __('Valor Venda') }}"
+                        placeholder="{{ __('Preço') }}" fgroup-class="col-12" enable-old-support />
                 </div>
 
                 <div class="row">
