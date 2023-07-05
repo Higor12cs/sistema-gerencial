@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product\ProductBrand;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductBrandStoreRequest extends FormRequest
+class ProductRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -22,6 +22,10 @@ class ProductBrandStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
+            'product_brand_id' => ['nullable', 'exists:product_brands,id'],
+            'product_category_id' => ['nullable', 'exists:product_categories,id'],
+            'product_season_id' => ['nullable', 'exists:product_seasons,id'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -29,6 +33,7 @@ class ProductBrandStoreRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute é obrigatório.',
+            'boolean' => 'O campo :attribute deve conter um valor verdadeiro ou falso.',
             'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
         ];
     }
@@ -37,6 +42,10 @@ class ProductBrandStoreRequest extends FormRequest
     {
         return [
             'name' => 'nome',
+            'product_brand_id' => 'marca',
+            'product_category_id' => 'categoria',
+            'product_season_id' => 'estação',
+            'active' => 'ativo',
         ];
     }
 }

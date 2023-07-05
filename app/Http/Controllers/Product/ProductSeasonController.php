@@ -3,17 +3,13 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\ProductSeason\ProductSeasonStoreRequest;
-use App\Http\Requests\Product\ProductSeason\ProductSeasonUpdateRequest;
+use App\Http\Requests\Product\ProductSeasonRequest;
 use App\Models\ProductSeason;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 class ProductSeasonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): View
     {
         $productSeasons = ProductSeason::with('createdBy')->get();
@@ -21,53 +17,35 @@ class ProductSeasonController extends Controller
         return view('app.products.product-seasons.index', compact('productSeasons'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(): View
     {
         return view('app.products.product-seasons.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ProductSeasonStoreRequest $request): RedirectResponse
+    public function store(ProductSeasonRequest $request): RedirectResponse
     {
         ProductSeason::create($request->validated());
 
         return to_route('app.product-seasons.index')->with('success', __('Temporada criada com sucesso!'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(ProductSeason $productSeason): View
     {
         return view('app.products.product-seasons.show', compact('productSeason'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(ProductSeason $productSeason): View
     {
         return view('app.products.product-seasons.edit', compact('productSeason'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ProductSeasonUpdateRequest $request, ProductSeason $productSeason): RedirectResponse
+    public function update(ProductSeasonRequest $request, ProductSeason $productSeason): RedirectResponse
     {
         $productSeason->update($request->validated());
 
         return to_route('app.product-seasons.index')->with('success', __('Temporada atualizada com sucesso!'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(ProductSeason $productSeason)
     {
         if ($productSeason->products->count()) {

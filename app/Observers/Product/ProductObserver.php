@@ -11,7 +11,7 @@ class ProductObserver
     {
         ProductVariant::create([
             'product_id' => $product->id,
-            'name' => 'Tamanho Único',
+            'product_size_id' => 1,
         ]);
     }
 }

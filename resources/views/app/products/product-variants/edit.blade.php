@@ -23,35 +23,18 @@
                 <input type="hidden" name="product_id" value="{{ $productVariant->product_id }}">
 
                 <div class="row">
-                    <x-adminlte-input name="name" label="{{ __('Nome') }}" placeholder="{{ __('Nome') }}"
-                        fgroup-class="col-12" enable-old-support value="{{ $productVariant->name }}" />
-                </div>
-
-                <div class="row">
                     <x-adminlte-input name="sku" label="{{ __('Código SKU') }}" placeholder="{{ __('SKU') }}"
-                        fgroup-class="col-lg-6" enable-old-support value="{{ $productVariant->sku }}" />
+                        fgroup-class="col-lg-4" enable-old-support value="{{ $productVariant->sku }}" />
 
-                    <x-adminlte-input name="barcode" label="{{ __('Código de Barras') }}"
-                        placeholder="{{ __('123') }}" fgroup-class="col-lg-6" enable-old-support
-                        value="{{ $productVariant->barcode }}" />
-                </div>
+                    <x-adminlte-input name="barcode" label="{{ __('Código de Barras') }}" placeholder="{{ __('123') }}"
+                        fgroup-class="col-lg-4" enable-old-support value="{{ $productVariant->barcode }}" />
 
-                <div class="row">
                     <x-adminlte-input name="price" type="number" step="any" label="{{ __('Valor Venda') }}"
-                        placeholder="{{ __('Preço') }}" fgroup-class="col-12" enable-old-support
+                        placeholder="{{ __('Preço') }}" fgroup-class="col-lg-4" enable-old-support
                         value="{{ $productVariant->price / 100 }}" />
                 </div>
 
                 <div class="row">
-                    <x-adminlte-select name="product_color_id" label="{{ __('Cor') }}" fgroup-class="col-lg-6"
-                        enable-old-support>
-                        <option value="">{{ __('-- selecione --') }}</option>
-                        @foreach ($productColors as $productColor)
-                            <option value="{{ $productColor->id }}" @if ($productVariant->product_color_id == $productColor->id) selected @endif>
-                                {{ $productColor->name }}</option>
-                        @endforeach
-                    </x-adminlte-select>
-
                     <x-adminlte-select name="product_size_id" label="{{ __('Tamanho') }}" fgroup-class="col-lg-6"
                         enable-old-support>
                         <option value="">{{ __('-- selecione --') }}</option>
@@ -61,8 +44,8 @@
                         @endforeach
                     </x-adminlte-select>
 
-                    <x-adminlte-select name="active" label="{{ __('Ativo') }}" fgroup-class="col-12" enable-old-support>
-                        <option value="">{{ __('-- selecione --') }}</option>
+                    <x-adminlte-select name="active" label="{{ __('Ativo') }}" fgroup-class="col-lg-6"
+                        enable-old-support>
                         <option value="1" @if ($productVariant->active == 1) selected @endif>{{ __('Ativo') }}
                         </option>
                         <option value="0" @if ($productVariant->active == 0) selected @endif>{{ __('Desativado') }}

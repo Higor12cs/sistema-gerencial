@@ -14,9 +14,9 @@ return [
     |
     */
 
-    'title' => 'Ink Vitrine',
+    'title' => 'Sistema Gerencial',
     'title_prefix' => '',
-    'title_postfix' => ' - Ink Vitrine',
+    'title_postfix' => ' - Sistema Gerencial',
 
     /*
     |--------------------------------------------------------------------------
@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '<b>Ink Vitrine</b>',
+    'logo' => '<b>Sistema Gerencial</b>',
     'logo_img' => 'vendor/adminlte/dist/img/Logo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img_class' => 'brand-image img-circle elevation-2',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Logo',
@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'vendor/adminlte/dist/img/Logo.png',
             'alt' => 'Preloader Image',
@@ -167,12 +167,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-danger',
+    'classes_auth_card' => 'card-outline card-primary',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-danger',
+    'classes_auth_btn' => 'btn-flat btn-primary',
 
     /*
     |--------------------------------------------------------------------------
@@ -349,11 +349,6 @@ return [
                     'text' => 'Temporadas',
                     'icon' => 'fas fa-fw fa-snowflake',
                     'route' => 'app.product-seasons.index',
-                ],
-                [
-                    'text' => 'Cores',
-                    'icon' => 'fas fa-fw fa-palette',
-                    'route' => 'app.product-colors.index',
                 ],
                 [
                     'text' => 'Tamanhos',

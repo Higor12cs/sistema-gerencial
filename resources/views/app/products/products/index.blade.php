@@ -36,7 +36,8 @@
             {{ __('Produtos') }}
         </div>
         <div class="card-body">
-            <x-adminlte-datatable id="products-table" :heads="$heads" :config="$config" hoverable with-buttons />
+            <x-adminlte-datatable id="products-table" class="hidden" :heads="$heads" :config="$config" hoverable
+                with-buttons />
         </div>
     </div>
 @stop

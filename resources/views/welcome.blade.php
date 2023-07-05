@@ -2,11 +2,13 @@
 <html>
 
 <head>
-    <title>Ink Vitrine - Landing Page</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ink+Vitrine&display=swap" rel="stylesheet">
+    <title>Sistema Gerencial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Ink Vitrine', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #F6F6F6;
             margin: 0;
             padding: 0;
@@ -23,20 +25,18 @@
         .title {
             font-size: 48px;
             font-weight: bold;
-            color: #333;
             margin-bottom: 20px;
         }
 
         .subtitle {
             font-size: 24px;
-            color: #777;
             margin-bottom: 40px;
         }
 
         .cta-button {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #DC3545;
+            background-color: #007BFF;
             color: #fff;
             font-size: 18px;
             text-decoration: none;
@@ -45,25 +45,25 @@
         }
 
         .cta-button:hover {
-            background-color: #C82333;
+            background-color: #0056b3;
         }
 
         .logo {
             display: inline-block;
             width: 100px;
             height: 100px;
-            /* background-color: #DC3545; */
             border-radius: 50%;
             margin-bottom: 30px;
         }
     </style>
+
 </head>
 
 <body>
     <div class="container">
         <img src="{{ asset('vendor/adminlte/dist/img/Logo.png') }}" alt="Logo" class="logo">
-        <h1 class="title">Ink Vitrine</h1>
-        <p class="subtitle">{{ __('A solução perfeita para sua loja!') }}</p>
+        <h1 class="title">Sistema Gerencial</h1>
+        <p class="subtitle">{{ __('Desenvolvido por Higor Carneiro') }}</p>
         <a href="{{ route('login') }}" class="cta-button">{{ __('Comece Agora!') }}</a>
     </div>
 </body>

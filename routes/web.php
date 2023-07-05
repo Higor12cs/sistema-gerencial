@@ -42,6 +42,5 @@ Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::resource('/product-brands', ProductBrandController::class);
     Route::resource('/product-categories', ProductCategoryController::class);
     Route::resource('/product-seasons', ProductSeasonController::class);
-    Route::resource('/product-colors', ProductColorController::class);
     Route::resource('/product-sizes', ProductSizeController::class);
 });

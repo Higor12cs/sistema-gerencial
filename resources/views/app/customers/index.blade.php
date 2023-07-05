@@ -7,6 +7,7 @@
         <x-header>{{ __('Clientes') }}</x-header>
         <a href="{{ route('app.customers.create') }}" class="btn btn-primary mb-auto">{{ __('Novo Cliente') }}</a>
     </div>
+    <x-alerts />
 @stop
 
 @php

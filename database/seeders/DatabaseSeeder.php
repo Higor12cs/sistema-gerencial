@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        $this->call(ProductColorsSeeder::class);
         $this->call(ProductSizesSeeder::class);
+        $this->call(DefaultCustomerSeeder::class);
     }
 }

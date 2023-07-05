@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product\ProductSize;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductSizeStoreRequest extends FormRequest
+class ProductSizeRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -22,6 +22,7 @@ class ProductSizeStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 
@@ -29,6 +30,7 @@ class ProductSizeStoreRequest extends FormRequest
     {
         return [
             'required' => 'O campo :attribute é obrigatório.',
+            'boolean' => 'O campo :attribute deve conter um valor verdadeiro ou falso.',
             'max' => 'O campo :attribute deve ter no máximo :max caracteres.',
         ];
     }
@@ -37,6 +39,7 @@ class ProductSizeStoreRequest extends FormRequest
     {
         return [
             'name' => 'nome',
+            'active' => 'ativo',
         ];
     }
 }

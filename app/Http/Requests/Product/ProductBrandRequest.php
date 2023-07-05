@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product\ProductBrand;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductBrandUpdateRequest extends FormRequest
+class ProductBrandRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -22,7 +22,7 @@ class ProductBrandUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'active' => ['required', 'boolean'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 

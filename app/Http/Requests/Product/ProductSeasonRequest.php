@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Product\ProductSize;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductSizeUpdateRequest extends FormRequest
+class ProductSeasonRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -22,7 +22,7 @@ class ProductSizeUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'active' => ['required', 'boolean'],
+            'active' => ['sometimes', 'boolean'],
         ];
     }
 

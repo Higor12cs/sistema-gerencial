@@ -4,21 +4,28 @@ namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CustomerUpdateRequest extends FormRequest
+class CustomerRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
-     */
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name' => \Illuminate\Support\Str::upper($this->name),
+            'legal_name' => \Illuminate\Support\Str::upper($this->legal_name),
+            'rg' => \Illuminate\Support\Str::upper($this->rg),
+            'email' => \Illuminate\Support\Str::lower($this->email),
+            'address' => \Illuminate\Support\Str::upper($this->address),
+            'complement' => \Illuminate\Support\Str::upper($this->complement),
+            'district' => \Illuminate\Support\Str::upper($this->district),
+            'city' => \Illuminate\Support\Str::upper($this->city),
+            'state' => \Illuminate\Support\Str::upper($this->state),
+        ]);
+    }
+
     public function rules(): array
     {
         return [
