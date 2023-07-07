@@ -4,11 +4,12 @@ use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Product\ProductBrandController;
 use App\Http\Controllers\Product\ProductCategoryController;
-use App\Http\Controllers\Product\ProductColorController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductSeasonController;
 use App\Http\Controllers\Product\ProductSizeController;
 use App\Http\Controllers\Product\ProductVariantController;
+use App\Http\Controllers\Stock\StockController;
+use App\Http\Controllers\Trial\TrialController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,6 @@ Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::resource('/product-categories', ProductCategoryController::class);
     Route::resource('/product-seasons', ProductSeasonController::class);
     Route::resource('/product-sizes', ProductSizeController::class);
+    Route::resource('/trials', TrialController::class);
+    Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
 });

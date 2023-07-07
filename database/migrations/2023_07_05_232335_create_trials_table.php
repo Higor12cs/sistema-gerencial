@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('trials', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('product_brand_id')->nullable()->constrained();
-            $table->foreignId('product_category_id')->nullable()->constrained();
-            $table->foreignId('product_season_id')->nullable()->constrained();
-            $table->boolean('active')->default(true);
+            $table->foreignId('customer_id')->constrained();
+            $table->date('date');
+            $table->date('return_date')->nullable();
+            $table->bigInteger('total_price')->default(0);
+            $table->text('observation')->nullable();
             $table->foreignId('created_by')->references('id')->on('users')->constrained();
             $table->timestamps();
             $table->softDeletes();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('trials');
     }
 };

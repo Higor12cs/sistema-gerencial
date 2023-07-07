@@ -16,7 +16,6 @@ class Product extends Model
         'product_brand_id',
         'product_category_id',
         'product_season_id',
-        'quantity',
         'active',
         'created_by',
     ];

@@ -318,14 +318,19 @@ return [
             'route' => 'app.dashboard.index',
         ],
 
-        ['header' => 'Clientes'],
+        ['header' => 'Vendas'],
+        [
+            'text' => 'Condicionais',
+            'icon' => 'fas fa-fw fa-bag-shopping',
+            'route' => 'app.trials.index',
+        ],
+
+        ['header' => 'Cadastros'],
         [
             'text' => 'Clientes',
             'icon' => 'fas fa-fw fa-user',
             'route' => 'app.customers.index',
         ],
-
-        ['header' => 'Produtos'],
         [
             'text' => 'Produtos',
             'icon' => 'fas fa-fw fa-box',
@@ -356,6 +361,12 @@ return [
                     'route' => 'app.product-sizes.index',
                 ],
             ],
+        ],
+        ['header' => 'Estoque'],
+        [
+            'text' => 'Estoque',
+            'icon' => 'fas fa-fw fa-dolly',
+            'route' => 'app.stocks.index',
         ],
     ],
 

@@ -16,7 +16,15 @@ class ProductController extends Controller
 {
     public function index(): View
     {
-        $products = Product::with('productBrand')->with('productCategory')->with('productSeason')->get();
+        $products = Product::select('products.*')
+            ->with('productBrand', 'productCategory', 'productSeason')
+            ->selectSub(function ($query) {
+                $query->selectRaw('SUM(stocks.quantity)')
+                    ->from('product_variants')
+                    ->join('stocks', 'product_variants.id', '=', 'stocks.product_variant_id')
+                    ->whereColumn('product_variants.product_id', 'products.id');
+            }, 'total_stock')
+            ->get();
 
         return view('app.products.products.index', compact('products'));
     }

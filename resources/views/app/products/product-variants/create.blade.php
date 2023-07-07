@@ -22,33 +22,18 @@
                 <input type="hidden" name="product_id" value="{{ $productId }}">
 
                 <div class="row">
-                    <x-adminlte-input name="name" label="{{ __('Nome') }}" placeholder="{{ __('Nome') }}"
-                        fgroup-class="col-12" enable-old-support />
-                </div>
-
-                <div class="row">
                     <x-adminlte-input name="sku" label="{{ __('Código SKU') }}" placeholder="{{ __('SKU') }}"
-                        fgroup-class="col-lg-6" enable-old-support />
+                        fgroup-class="col-lg-4" enable-old-support />
 
-                    <x-adminlte-input name="barcode" label="{{ __('Código de Barras') }}"
-                        placeholder="{{ __('123') }}" fgroup-class="col-lg-6" enable-old-support />
-                </div>
+                    <x-adminlte-input name="barcode" label="{{ __('Código de Barras') }}" placeholder="{{ __('123') }}"
+                        fgroup-class="col-lg-4" enable-old-support />
 
-                <div class="row">
                     <x-adminlte-input name="price" type="number" step="any" label="{{ __('Valor Venda') }}"
-                        placeholder="{{ __('Preço') }}" fgroup-class="col-12" enable-old-support />
+                        placeholder="{{ __('Preço') }}" fgroup-class="col-lg-4" enable-old-support />
                 </div>
 
                 <div class="row">
-                    <x-adminlte-select name="product_color_id" label="{{ __('Cor') }}" fgroup-class="col-lg-6"
-                        enable-old-support>
-                        <option value="">{{ __('-- selecione --') }}</option>
-                        @foreach ($productColors as $productColor)
-                            <option value="{{ $productColor->id }}">{{ $productColor->name }}</option>
-                        @endforeach
-                    </x-adminlte-select>
-
-                    <x-adminlte-select name="product_size_id" label="{{ __('Tamanho') }}" fgroup-class="col-lg-6"
+                    <x-adminlte-select name="product_size_id" label="{{ __('Tamanho') }}" fgroup-class="col-lg-12"
                         enable-old-support>
                         <option value="">{{ __('-- selecione --') }}</option>
                         @foreach ($productSizes as $productSize)

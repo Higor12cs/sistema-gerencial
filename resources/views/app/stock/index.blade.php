@@ -1,12 +1,9 @@
 @extends('adminlte::page')
 
-@section('title', __('Produtos'))
+@section('title', 'Estoque')
 
 @section('content_header')
-    <div class="d-flex justify-content-between">
-        <x-header>{{ __('Produtos') }}</x-header>
-        <a href="{{ route('app.products.create') }}" class="btn btn-primary mb-auto">{{ __('Novo Produto') }}</a>
-    </div>
+    <x-header>{{ __('Estoque') }}</x-header>
     <x-alerts />
 @stop
 
@@ -32,9 +29,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
-            {{ __('Produtos') }}
-        </div>
+        <div class="card-header">Estoque</div>
         <div class="card-body">
             <x-adminlte-datatable id="products-table" class="hidden" :heads="$heads" :config="$config" hoverable
                 with-buttons />
