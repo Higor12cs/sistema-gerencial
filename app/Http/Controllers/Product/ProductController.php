@@ -40,9 +40,9 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request): RedirectResponse
     {
-        Product::create($request->validated());
+        $product = Product::create($request->validated());
 
-        return to_route('app.products.index')->with('success', __('Produto criado com sucesso!'));
+        return to_route('app.products.edit', $product)->with('success', __('Produto criado com sucesso!'));
     }
 
     public function show(Product $product): View

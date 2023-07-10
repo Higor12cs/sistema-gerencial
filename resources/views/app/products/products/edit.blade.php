@@ -1,42 +1,43 @@
 @extends('adminlte::page')
 
-@section('title', __('Atualizar Produto'))
+@section('title', __('Editar Produto'))
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <x-header>{{ __('Atualizar Produto') }}</x-header>
+        <x-header>{{ __('Editar Produto') }} #{{ $product->id }}</x-header>
         <a href="{{ route('app.products.index') }}" class="btn btn-secondary mb-auto">{{ __('Voltar') }}</a>
     </div>
     <x-alerts />
 @stop
 
 @php
-    $heads = [['label' => __('Código'), 'width' => 10], __('Nome'), __('Cor'), __('Tamanho'), __('Estoque'), ['label' => __('Ativo'), 'width' => 10], ['label' => __('Ações'), 'no-export' => true, 'width' => 5]];
+    $heads = [['label' => __('Código'), 'width' => 10], __('Tamanho'), __('Estoque'), ['label' => __('Ativo'), 'width' => 10], ['label' => __('Ações'), 'no-export' => true, 'width' => 5]];
 
     foreach ($productVariants as $productVariant) {
         $btnShow = '<a href="' . route('app.product-variants.show', $productVariant) . '" class="btn btn-xs btn-default mx-1" title="Visualizar"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
         $btnEdit = '<a href="' . route('app.product-variants.edit', $productVariant) . '" class="btn btn-xs btn-default mx-1" title="Editar"><i class="fa fa-lg fa-fw fa-pen"></i></a>';
 
-        $productVariantsData[] = [$productVariant->id, $productVariant->name, $productVariant->productColor->name ?? '-', $productVariant->productSize->name ?? '-', number_format($productVariant->quantity, 2, ',', '.'), $productVariant->active ? '<span class="badge badge-success">Ativo</span>' : '<span class="badge badge-danger">Desativado</span>', '<nobr>' . $btnShow . $btnEdit . '</nobr>'];
+        $productVariantsData[] = [$productVariant->id, $productVariant->productSize->name ?? '-', number_format($productVariant->quantity, 2, ',', '.'), $productVariant->active ? '<span class="badge badge-success">Ativo</span>' : '<span class="badge badge-danger">Desativado</span>', '<nobr>' . $btnShow . $btnEdit . '</nobr>'];
     }
 
     $config = [
         'data' => $productVariantsData ?? null,
         'order' => [[0, 'desc']],
-        'columns' => [null, null, null, null, null, null, ['orderable' => false]],
+        'columns' => [null, null, null, null, ['orderable' => false]],
         'searching' => false,
         'info' => false,
         'paging' => false,
         'language' => [
             'url' => '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json',
         ],
+        'pageLength' => 50,
     ];
 @endphp
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            {{ __('Atualizar Produto') }}
+            {{ __('Editar Produto') }}
         </div>
         <div class="card-body">
             <form action="{{ route('app.products.update', $product) }}" method="POST">

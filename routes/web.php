@@ -44,6 +44,6 @@ Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::resource('/product-categories', ProductCategoryController::class);
     Route::resource('/product-seasons', ProductSeasonController::class);
     Route::resource('/product-sizes', ProductSizeController::class);
-    Route::resource('/trials', TrialController::class);
+    Route::resource('/trials', TrialController::class)->except(['store', 'update']);
     Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
 });

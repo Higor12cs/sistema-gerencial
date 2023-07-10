@@ -1,6 +1,6 @@
 <div>
     @if (session('success'))
-        <x-adminlte-alert title="{{ __('Sucesso') }}" id="bootstrap-alert" theme="success" class="mt-4" dismissable>
+        <x-adminlte-alert title="{{ __('Sucesso') }}" id="success-alert" theme="success" class="mt-4" dismissable>
             {{ session('success') }}
         </x-adminlte-alert>
     @elseif (session('warning'))
@@ -13,3 +13,11 @@
         </x-adminlte-alert>
     @endif
 </div>
+
+@push('js')
+    <script>
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+            $("#success-alert").slideUp(500);
+        });
+    </script>
+@endpush

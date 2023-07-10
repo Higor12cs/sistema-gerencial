@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <x-header>{{ __('Editar Marca') }}</x-header>
+        <x-header>{{ __('Editar Marca') }} #{{ $productBrand->id }}</x-header>
         <a href="{{ route('app.product-brands.index') }}" class="btn btn-secondary mb-auto">{{ __('Voltar') }}</a>
     </div>
     <x-alerts />
@@ -13,7 +13,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-            {{ __('Editar Marca') }}
+            {{ __('Editar Marca') }} #{{ $productBrand->id }}
         </div>
         <div class="card-body">
             <form action="{{ route('app.product-brands.update', $productBrand) }}" method="POST">

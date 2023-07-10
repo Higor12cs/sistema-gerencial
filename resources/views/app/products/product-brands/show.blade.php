@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <x-header>{{ __('Visualizar Marca') }}</x-header>
+        <x-header>{{ __('Marca') }} #{{ $productBrand->id }}</x-header>
         <a href="{{ route('app.product-brands.index') }}" class="btn btn-secondary mb-auto">{{ __('Voltar') }}</a>
     </div>
     <x-alerts />
@@ -23,7 +23,7 @@
 
             <div class="d-flex justify-content-between">
                 <a href="{{ route('app.product-brands.edit', $productBrand) }}" type="submit"
-                    class="btn btn-primary mt-2">{{ __('Incluir Marca') }}</a>
+                    class="btn btn-primary mt-2">{{ __('Editar Marca') }}</a>
 
                 <form action="{{ route('app.product-brands.destroy', $productBrand) }}" method="POST">
                     @csrf

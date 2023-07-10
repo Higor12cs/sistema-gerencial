@@ -27,6 +27,7 @@
         'language' => [
             'url' => '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json',
         ],
+        'pageLength' => 50,
     ];
 @endphp
 
@@ -36,7 +37,7 @@
             {{ __('Categorias') }}
         </div>
         <div class="card-body">
-            <x-adminlte-datatable id="categories-table" :heads="$heads" :config="$config" hoverable with-buttons />
+            <x-adminlte-datatable id="categories-table" :heads="$heads" :config="$config" hoverable />
         </div>
     </div>
 @stop

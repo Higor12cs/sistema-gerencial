@@ -11,11 +11,11 @@ class Trial extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = [
+    protected $fillable = [
         'customer_id',
         'date',
         'return_date',
-        'total_amount',
+        'total_price',
         'observation',
         'created_by',
     ];

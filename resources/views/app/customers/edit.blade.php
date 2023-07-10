@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <x-header>{{ __('Editar Cliente') }}</x-header>
+        <x-header>{{ __('Editar Cliente') }} #{{ $customer->id }}</x-header>
         <a href="{{ route('app.customers.index') }}" class="btn btn-secondary mb-auto">{{ __('Voltar') }}</a>
     </div>
     <x-alerts />

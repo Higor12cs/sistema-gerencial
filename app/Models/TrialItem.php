@@ -13,7 +13,7 @@ class TrialItem extends Model
 
     protected $fillable = [
         'trial_id',
-        'trialItem_variant_id',
+        'product_variant_id',
         'transaction_type',
         'transaction_date',
         'quantity',
@@ -40,9 +40,9 @@ class TrialItem extends Model
         return $this->belongsTo(Trial::class);
     }
 
-    public function trialItemVariant(): BelongsTo
+    public function productVariant(): BelongsTo
     {
-        return $this->belongsTo(trialItemVariant::class);
+        return $this->belongsTo(ProductVariant::class);
     }
 
     public function createdBy(): BelongsTo

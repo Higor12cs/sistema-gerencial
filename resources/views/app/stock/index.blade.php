@@ -24,6 +24,7 @@
         'language' => [
             'url' => '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json',
         ],
+        'pageLength' => 50,
     ];
 @endphp
 
@@ -32,7 +33,7 @@
         <div class="card-header">Estoque</div>
         <div class="card-body">
             <x-adminlte-datatable id="products-table" class="hidden" :heads="$heads" :config="$config" hoverable
-                with-buttons />
+                />
         </div>
     </div>
 @stop

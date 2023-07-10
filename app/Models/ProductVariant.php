@@ -34,11 +34,6 @@ class ProductVariant extends Model
         });
     }
 
-    public function createdBy(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'created_by');
-    }
-
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
@@ -47,6 +42,11 @@ class ProductVariant extends Model
     public function productSize(): BelongsTo
     {
         return $this->belongsTo(ProductSize::class);
+    }
+
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function stock(): BelongsTo

@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between">
-        <x-header>{{ __('Visualizar Produto') }}</x-header>
+        <x-header>{{ __('Produto') }} #{{ $product->id }}</x-header>
         <a href="{{ route('app.products.index') }}" class="btn btn-secondary mb-auto">{{ __('Voltar') }}</a>
     </div>
     <x-alerts />
@@ -30,6 +30,7 @@
         'language' => [
             'url' => '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json',
         ],
+        'pageLength' => 50,
     ];
 @endphp
 
