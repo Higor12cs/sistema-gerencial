@@ -14,16 +14,11 @@ class TrialItem extends Model
     protected $fillable = [
         'trial_id',
         'product_variant_id',
-        'transaction_type',
-        'transaction_date',
         'quantity',
+        'quantity_returned',
         'unit_price',
         'total_price',
         'created_by',
-    ];
-
-    protected $casts = [
-        'transaction_date' => 'datetime',
     ];
 
     protected static function boot(): void

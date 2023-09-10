@@ -16,8 +16,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Administrador',
             'username' => 'admin',
             'password' => bcrypt('admin'),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         $this->call(ProductSizesSeeder::class);

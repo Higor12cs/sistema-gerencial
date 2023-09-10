@@ -15,9 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('trial_id')->constrained();
             $table->foreignId('product_variant_id')->constrained();
-            $table->string('transaction_type', 50);
-            $table->dateTime('transaction_date');
             $table->bigInteger('quantity')->default(0);
+            $table->bigInteger('quantity_returned')->default(0);
             $table->bigInteger('unit_price')->default(0);
             $table->bigInteger('total_price')->default(0);
             $table->foreignId('created_by')->references('id')->on('users')->constrained();

@@ -14,13 +14,7 @@
     <div class="card">
         <div class="card-header">Novo Condicional</div>
         <div class="card-body">
-            @livewire('trial.customer-search', ['customers' => $customers])
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            @livewire('trial.trial-items-section', ['products' => $products])
+            @livewire('trial.trial-create')
         </div>
     </div>
 @stop

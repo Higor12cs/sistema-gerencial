@@ -46,6 +46,6 @@ class LoginController extends Controller
 
     public function authenticated(): RedirectResponse
     {
-        return to_route('app.dashboard.index');
+        return to_route('app.dashboard.index')->with('success', 'Bem-vindo!');
     }
 }

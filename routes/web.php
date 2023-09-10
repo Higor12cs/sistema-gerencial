@@ -26,14 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('welcome');
 
-Auth::routes([
-    'login' => true,
-    'logout' => true,
-    'register' => false,
-    'reset' => false,
-    'confirm' => false,
-    'verify' => false,
-]);
+Auth::routes(['login' => true, 'logout' => true, 'register' => false, 'reset' => false, 'confirm' => false, 'verify' => false]);
 
 Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');

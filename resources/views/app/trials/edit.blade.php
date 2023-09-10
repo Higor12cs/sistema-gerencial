@@ -14,22 +14,7 @@
     <div class="card">
         <div class="card-header">Editando Condicional</div>
         <div class="card-body">
-            @livewire('trial.customer-search', [
-                'selected' => true,
-                'trialId' => $trial->id,
-                'customerId' => $trial->customer_id,
-                'customers' => $customers,
-            ])
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            @livewire('trial.trial-items-section', [
-                'trialId' => $trial->id,
-                'products' => $products,
-                'inputEnabled' => true,
-            ])
+            @livewire('trial.trial-edit', ['trial' => $trial])
         </div>
     </div>
 @stop
