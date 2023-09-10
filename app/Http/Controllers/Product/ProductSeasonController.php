@@ -54,6 +54,7 @@ class ProductSeasonController extends Controller
 
         try {
             $productSeason->delete();
+
             return to_route('app.product-seasons.index')->with('success', __('Temporada excluída com sucesso!'));
         } catch (\Exception $e) {
             return to_route('app.product-seasons.show', $productSeason)->with('warning', __('Ocorreu um erro ao excluir a temporada selecionada.'));

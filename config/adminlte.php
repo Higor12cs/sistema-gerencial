@@ -292,16 +292,16 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-search',
-            'text'         => 'search',
+            'type' => 'navbar-search',
+            'text' => 'search',
             'topnav_right' => false,
         ],
         [
-            'type'         => 'darkmode-widget',
+            'type' => 'darkmode-widget',
             'topnav_right' => true,
         ],
         [
-            'type'         => 'fullscreen-widget',
+            'type' => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
@@ -334,7 +334,7 @@ return [
         [
             'text' => 'Produtos',
             'icon' => 'fas fa-fw fa-box',
-            'route' => 'app.products.index'
+            'route' => 'app.products.index',
         ],
         [
             'text' => 'Atributos',
@@ -442,7 +442,7 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css',
-                ]
+                ],
             ],
         ],
         'Chartjs' => [

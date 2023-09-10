@@ -54,6 +54,7 @@ class ProductSizeController extends Controller
 
         try {
             $productSize->delete();
+
             return to_route('app.product-sizes.index')->with('success', __('Tamanho excluída com sucesso!'));
         } catch (\Exception $e) {
             return to_route('app.product-sizes.show', $productSize)->with('warning', __('Ocorreu um erro ao excluir a categoria selecionada.'));

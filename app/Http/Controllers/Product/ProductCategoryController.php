@@ -54,6 +54,7 @@ class ProductCategoryController extends Controller
 
         try {
             $productCategory->delete();
+
             return to_route('app.product-categories.index')->with('success', __('Categoria excluída com sucesso!'));
         } catch (\Exception $e) {
             return to_route('app.product-categories.show', $productCategory)->with('warning', __('Ocorreu um erro ao excluir a categoria selecionada.'));

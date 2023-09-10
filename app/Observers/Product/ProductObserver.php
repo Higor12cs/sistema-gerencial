@@ -4,7 +4,6 @@ namespace App\Observers\Product;
 
 use App\Models\Product;
 use App\Models\ProductVariant;
-use App\Models\Stock;
 
 class ProductObserver
 {

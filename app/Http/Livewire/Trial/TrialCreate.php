@@ -15,16 +15,23 @@ use Livewire\Component;
 class TrialCreate extends Component
 {
     public Collection $customers;
+
     public Collection $products;
 
     public $trialItems = [];
+
     public $index = 1;
+
     public $totalAmount = 0;
 
     public $customer_id;
+
     public $product_variant_id;
+
     public $quantity = 1;
+
     public $unit_price = 0;
+
     public $total_price = 0;
 
     public function mount()
@@ -44,7 +51,9 @@ class TrialCreate extends Component
 
     public function addProduct()
     {
-        if (is_null($this->product_variant_id) || $this->product_variant_id == "") return;
+        if (is_null($this->product_variant_id) || $this->product_variant_id == '') {
+            return;
+        }
 
         $productVariant = ProductVariant::findOrFail($this->product_variant_id);
 
@@ -107,7 +116,9 @@ class TrialCreate extends Component
     {
         $productVariant = ProductVariant::find($this->product_variant_id);
 
-        if (!$productVariant) return;
+        if (! $productVariant) {
+            return;
+        }
 
         $this->unit_price = number_format($productVariant->price / 100, 2, ',', '.');
         $this->total_price = number_format(($productVariant->price * $this->quantity) / 100, 2, ',', '.');
@@ -143,7 +154,7 @@ class TrialCreate extends Component
                 ]);
 
                 Stock::where('product_variant_id', $item['product_variant_id'])->update([
-                    'quantity_on_trials' => DB::raw('quantity_on_trials - ' . $item['quantity'])
+                    'quantity_on_trials' => DB::raw('quantity_on_trials - '.$item['quantity']),
                 ]);
             }
         });

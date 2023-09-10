@@ -54,6 +54,7 @@ class ProductBrandController extends Controller
 
         try {
             $productBrand->delete();
+
             return to_route('app.product-brands.index')->with('success', __('Marca excluída com sucesso!'));
         } catch (\Exception $e) {
             return to_route('app.product-brands.show', $productBrand)->with('warning', __('Ocorreu um erro ao excluir a marca selecionada.'));

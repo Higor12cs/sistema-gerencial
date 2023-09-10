@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Trial;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Models\Trial;
 use App\Models\TrialItem;
 use Illuminate\Http\RedirectResponse;

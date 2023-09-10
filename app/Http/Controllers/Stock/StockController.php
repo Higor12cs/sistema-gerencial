@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Stock;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class StockController extends Controller
