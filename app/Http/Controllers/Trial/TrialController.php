@@ -8,7 +8,6 @@ use App\Models\Product;
 use App\Models\Trial;
 use App\Models\TrialItem;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class TrialController extends Controller
@@ -32,11 +31,6 @@ class TrialController extends Controller
         return view('app.trials.create', compact('customers', 'products'));
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
-
     public function show(Trial $trial)
     {
         $trialItems = TrialItem::where('trial_id', $trial->id)
@@ -56,11 +50,6 @@ class TrialController extends Controller
             ->get();
 
         return view('app.trials.edit', compact('trial', 'customers', 'products'));
-    }
-
-    public function update(Request $request, Trial $trial)
-    {
-        //
     }
 
     public function destroy(Trial $trial): RedirectResponse

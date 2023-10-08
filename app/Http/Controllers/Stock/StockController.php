@@ -18,6 +18,12 @@ class StockController extends Controller
                     ->join('stocks', 'product_variants.id', '=', 'stocks.product_variant_id')
                     ->whereColumn('product_variants.product_id', 'products.id');
             }, 'total_stock')
+            ->selectSub(function ($query) {
+                $query->selectRaw('SUM(stocks.quantity_on_trials)')
+                    ->from('product_variants')
+                    ->join('stocks', 'product_variants.id', '=', 'stocks.product_variant_id')
+                    ->whereColumn('product_variants.product_id', 'products.id');
+            }, 'total_on_trials')
             ->get();
 
         return view('app.stock.index', compact('products'));

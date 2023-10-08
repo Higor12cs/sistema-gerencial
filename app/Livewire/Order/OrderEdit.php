@@ -1,24 +1,26 @@
 <?php
 
-namespace App\Livewire\Trial;
+namespace App\Livewire\Order;
 
 use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Stock;
-use App\Models\Trial;
-use App\Models\TrialItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class TrialCreate extends Component
+class OrderEdit extends Component
 {
     public Collection $customers;
 
     public Collection $products;
 
-    public $trialItems = [];
+    public $order;
+
+    public $orderItems;
 
     public $index = 1;
 
@@ -34,30 +36,52 @@ class TrialCreate extends Component
 
     public $total_price = 0;
 
-    public function mount()
+    public function mount(Order $order)
     {
+        $this->order = $order;
         $this->customers = Customer::orderBy('name')->get();
         $this->products = Product::where('active', true)
             ->with('productVariants')
             ->with('productVariants.productSize')
             ->orderBy('name')
             ->get();
+
+        $this->customer_id = $order->customer_id;
+        $this->orderItems = $order->orderItems->map(function ($item, $index) {
+            $this->index += 1;
+
+            return [
+                'id' => $item->id,
+                'index' => $index + 1,
+                'product_variant_id' => $item->product_variant_id,
+                'name' => $item->productVariant->product->name,
+                'quantity' => $item->quantity,
+                'unit_price' => $item->unit_price,
+                'total_price' => $item->total_price,
+            ];
+        })->values();
+
+        $this->totalAmount = $this->orderItems->sum('total_price');
     }
 
     public function render()
     {
-        return view('livewire.trial.trial-create');
+        return view('livewire.order.order-edit');
     }
 
     public function addProduct()
     {
         if (is_null($this->product_variant_id) || $this->product_variant_id == '') {
+            $this->unit_price = 0;
+            $this->total_price = 0;
+
             return;
         }
 
         $productVariant = ProductVariant::findOrFail($this->product_variant_id);
 
-        $this->trialItems[] = [
+        $this->orderItems[] = [
+            'id' => null,
             'index' => $this->index,
             'product_variant_id' => $productVariant->id,
             'name' => $productVariant->product->name,
@@ -71,47 +95,20 @@ class TrialCreate extends Component
 
         $this->product_variant_id = null;
         $this->quantity = 1;
-        $this->unit_price = 0;
-        $this->total_price = 0;
     }
 
     public function removeProduct($index)
     {
-        $indexToRemove = array_search($index, array_column($this->trialItems, 'index'));
+        $this->orderItems = $this->orderItems->map(function ($item) use ($index) {
+            if ($item['index'] == $index) {
+                $item['deleted'] = true;
+                $this->totalAmount -= $item['total_price'];
+            }
 
-        $this->totalAmount -= $this->trialItems[$indexToRemove]['total_price'];
+            return $item;
+        });
 
-        unset($this->trialItems[$indexToRemove]);
-
-        $this->trialItems = array_values($this->trialItems);
-        $this->resetItemsIndexes();
-
-        if (empty($this->trialItems)) {
-            $this->index = 1;
-        } else {
-            $this->index = max(array_column($this->trialItems, 'index')) + 1;
-        }
-    }
-
-    public function resetItemsIndexes()
-    {
-        $newTrialProducts = [];
-        $currentIndex = 1;
-
-        foreach ($this->trialItems as $product) {
-            $newTrialProducts[] = [
-                'index' => $currentIndex,
-                'product_variant_id' => $product['product_variant_id'],
-                'name' => $product['name'],
-                'quantity' => $product['quantity'],
-                'unit_price' => $product['unit_price'],
-                'total_price' => $product['total_price'],
-            ];
-
-            $currentIndex++;
-        }
-
-        $this->trialItems = $newTrialProducts;
+        $this->orderItems = $this->orderItems->values();
     }
 
     public function updateSelectedProduct()
@@ -129,7 +126,7 @@ class TrialCreate extends Component
         $this->total_price = number_format(($productVariant->price * $this->quantity) / 100, 2, ',', '.');
     }
 
-    public function finishTrial()
+    public function finishOrder()
     {
         $this->validate([
             'customer_id' => 'required',
@@ -138,32 +135,45 @@ class TrialCreate extends Component
         ]);
 
         DB::transaction(function () {
-            $totalPrice = array_reduce($this->trialItems, function ($carry, $product) {
-                return $carry + $product['total_price'];
-            }, 0);
+            $totalPrice = $this->totalAmount;
 
-            $trial = Trial::create([
+            $this->order->update([
                 'customer_id' => $this->customer_id,
-                'date' => now()->format('Y-m-d'),
-                'return_date' => now()->format('Y-m-d'),
                 'total_price' => $totalPrice,
             ]);
 
-            foreach ($this->trialItems as $item) {
-                TrialItem::create([
-                    'trial_id' => $trial->id,
-                    'product_variant_id' => $item['product_variant_id'],
+            foreach ($this->orderItems as $item) {
+                if (isset($item['deleted']) && $item['deleted']) {
+                    if (isset($item['id'])) {
+                        OrderItem::destroy($item['id']);
+                    }
+
+                    continue;
+                }
+
+                $existingItem = $this->order->orderItems->where('id', $item['id'])->first();
+
+                $itemData = [
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['unit_price'],
                     'total_price' => $item['total_price'],
-                ]);
+                ];
+
+                if ($existingItem) {
+                    $existingItem->update($itemData);
+                } else {
+                    OrderItem::create(array_merge($itemData, [
+                        'order_id' => $this->order->id,
+                        'product_variant_id' => $item['product_variant_id'],
+                    ]));
+                }
 
                 Stock::where('product_variant_id', $item['product_variant_id'])->update([
-                    'quantity_on_trials' => DB::raw('quantity_on_trials - '.$item['quantity']),
+                    'quantity' => DB::raw('quantity - '.$item['quantity']),
                 ]);
             }
         });
 
-        return to_route('app.trials.index')->with('success', 'Condicional criado com sucesso!');
+        return to_route('app.orders.index')->with('success', 'Pedido atualizado com sucesso!');
     }
 }

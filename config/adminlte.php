@@ -320,6 +320,11 @@ return [
 
         ['header' => 'Vendas'],
         [
+            'text' => 'Vendas',
+            'icon' => 'fas fa-fw fa-basket-shopping',
+            'route' => 'app.orders.index',
+        ],
+        [
             'text' => 'Condicionais',
             'icon' => 'fas fa-fw fa-bag-shopping',
             'route' => 'app.trials.index',

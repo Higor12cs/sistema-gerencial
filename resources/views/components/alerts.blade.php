@@ -16,8 +16,18 @@
 
 @push('js')
     <script>
-        $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-            $("#success-alert").slideUp(500);
+        var $successAlert = $("#success-alert");
+
+        function hideAlert() {
+            $successAlert.slideUp(500);
+        }
+
+        var timer = setTimeout(hideAlert, 4000);
+
+        $successAlert.on("mouseenter", function() {
+            clearTimeout(timer);
+        }).on("mouseleave", function() {
+            timer = setTimeout(hideAlert, 4000);
         });
     </script>
 @endpush

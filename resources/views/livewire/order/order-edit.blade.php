@@ -50,7 +50,7 @@
                         <button wire:click="addProduct" wire:loading.attr="disabled" class="btn btn-primary btn-xs text-nowrap" wire:loading.attr="disabled">Adicionar Produto</button>
                     </td>
                 </tr>
-                @foreach ($trialItems as $product)
+                @foreach ($orderItems as $product)
                     @if (!isset($product['deleted']) || !$product['deleted'])
                         <tr>
                             <td>{{ $product['index'] }}</td>
@@ -69,7 +69,7 @@
     </div>
 
     <div class="d-flex justify-content-between mt-2">
-        <button wire:click="finishTrial" class="btn btn-primary" @disabled($totalAmount == 0)>Atualizar Condicional</button>
+        <button wire:click="finishOrder" class="btn btn-primary" @disabled($totalAmount == 0)>Atualizar Pedido</button>
         <h4 class="m-0">Total R${{ number_format($totalAmount / 100, 2, ',', '.') }}</h4>
     </div>
 </div>

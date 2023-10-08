@@ -47,7 +47,7 @@
                         <input wire:model.live.blur="total_price" type="text" name="total_price" class="form-control form-control-sm" disabled>
                     </td>
                     <td>
-                        <button wire:click="addProduct" class="btn btn-primary btn-xs text-nowrap">Adicionar Produto</button>
+                        <button wire:click="addProduct" class="btn btn-primary btn-xs text-nowrap" wire:loading.attr="disabled">Adicionar Produto</button>
                     </td>
                 </tr>
                 @foreach ($trialItems as $product)
@@ -58,7 +58,7 @@
                         <td>{{ number_format($product['unit_price'] / 100, 2, ',', '.') }}</td>
                         <td>{{ number_format($product['total_price'] / 100, 2, ',', '.') }}</td>
                         <td>
-                            <button wire:click="removeProduct({{ $product['index'] }})" class="btn btn-xs btn-danger">Remover</button>
+                            <button wire:click="removeProduct({{ $product['index'] }})" class="btn btn-xs btn-danger" wire:loading.attr="disabled">Remover</button>
                         </td>
                     </tr>
                 @endforeach

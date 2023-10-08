@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Livewire\Trial;
+namespace App\Livewire\Order;
 
 use App\Models\Customer;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\Stock;
-use App\Models\Trial;
-use App\Models\TrialItem;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class TrialCreate extends Component
+class OrderCreate extends Component
 {
     public Collection $customers;
 
     public Collection $products;
 
-    public $trialItems = [];
+    public $orderItems = [];
 
     public $index = 1;
 
@@ -46,7 +46,7 @@ class TrialCreate extends Component
 
     public function render()
     {
-        return view('livewire.trial.trial-create');
+        return view('livewire.order.order-create');
     }
 
     public function addProduct()
@@ -57,7 +57,7 @@ class TrialCreate extends Component
 
         $productVariant = ProductVariant::findOrFail($this->product_variant_id);
 
-        $this->trialItems[] = [
+        $this->orderItems[] = [
             'index' => $this->index,
             'product_variant_id' => $productVariant->id,
             'name' => $productVariant->product->name,
@@ -77,29 +77,29 @@ class TrialCreate extends Component
 
     public function removeProduct($index)
     {
-        $indexToRemove = array_search($index, array_column($this->trialItems, 'index'));
+        $indexToRemove = array_search($index, array_column($this->orderItems, 'index'));
 
-        $this->totalAmount -= $this->trialItems[$indexToRemove]['total_price'];
+        $this->totalAmount -= $this->orderItems[$indexToRemove]['total_price'];
 
-        unset($this->trialItems[$indexToRemove]);
+        unset($this->orderItems[$indexToRemove]);
 
-        $this->trialItems = array_values($this->trialItems);
+        $this->orderItems = array_values($this->orderItems);
         $this->resetItemsIndexes();
 
-        if (empty($this->trialItems)) {
+        if (empty($this->orderItems)) {
             $this->index = 1;
         } else {
-            $this->index = max(array_column($this->trialItems, 'index')) + 1;
+            $this->index = max(array_column($this->orderItems, 'index')) + 1;
         }
     }
 
     public function resetItemsIndexes()
     {
-        $newTrialProducts = [];
+        $newOrderProducts = [];
         $currentIndex = 1;
 
-        foreach ($this->trialItems as $product) {
-            $newTrialProducts[] = [
+        foreach ($this->orderItems as $product) {
+            $newOrderProducts[] = [
                 'index' => $currentIndex,
                 'product_variant_id' => $product['product_variant_id'],
                 'name' => $product['name'],
@@ -111,7 +111,7 @@ class TrialCreate extends Component
             $currentIndex++;
         }
 
-        $this->trialItems = $newTrialProducts;
+        $this->orderItems = $newOrderProducts;
     }
 
     public function updateSelectedProduct()
@@ -129,7 +129,7 @@ class TrialCreate extends Component
         $this->total_price = number_format(($productVariant->price * $this->quantity) / 100, 2, ',', '.');
     }
 
-    public function finishTrial()
+    public function finishOrder()
     {
         $this->validate([
             'customer_id' => 'required',
@@ -138,20 +138,20 @@ class TrialCreate extends Component
         ]);
 
         DB::transaction(function () {
-            $totalPrice = array_reduce($this->trialItems, function ($carry, $product) {
+            $totalPrice = array_reduce($this->orderItems, function ($carry, $product) {
                 return $carry + $product['total_price'];
             }, 0);
 
-            $trial = Trial::create([
+            $order = Order::create([
                 'customer_id' => $this->customer_id,
                 'date' => now()->format('Y-m-d'),
                 'return_date' => now()->format('Y-m-d'),
                 'total_price' => $totalPrice,
             ]);
 
-            foreach ($this->trialItems as $item) {
-                TrialItem::create([
-                    'trial_id' => $trial->id,
+            foreach ($this->orderItems as $item) {
+                OrderItem::create([
+                    'order_id' => $order->id,
                     'product_variant_id' => $item['product_variant_id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['unit_price'],
@@ -159,11 +159,11 @@ class TrialCreate extends Component
                 ]);
 
                 Stock::where('product_variant_id', $item['product_variant_id'])->update([
-                    'quantity_on_trials' => DB::raw('quantity_on_trials - '.$item['quantity']),
+                    'quantity' => DB::raw('quantity - '.$item['quantity']),
                 ]);
             }
         });
 
-        return to_route('app.trials.index')->with('success', 'Condicional criado com sucesso!');
+        return to_route('app.orders.index')->with('success', 'Pedido criado com sucesso!');
     }
 }

@@ -72,6 +72,9 @@ class TrialEdit extends Component
     public function addProduct()
     {
         if (is_null($this->product_variant_id) || $this->product_variant_id == '') {
+            $this->unit_price = 0;
+            $this->total_price = 0;
+
             return;
         }
 

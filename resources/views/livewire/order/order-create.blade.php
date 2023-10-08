@@ -47,29 +47,27 @@
                         <input wire:model.live.blur="total_price" type="text" name="total_price" class="form-control form-control-sm" disabled>
                     </td>
                     <td>
-                        <button wire:click="addProduct" wire:loading.attr="disabled" class="btn btn-primary btn-xs text-nowrap" wire:loading.attr="disabled">Adicionar Produto</button>
+                        <button wire:click="addProduct" class="btn btn-primary btn-xs text-nowrap" wire:loading.attr="disabled">Adicionar Produto</button>
                     </td>
                 </tr>
-                @foreach ($trialItems as $product)
-                    @if (!isset($product['deleted']) || !$product['deleted'])
-                        <tr>
-                            <td>{{ $product['index'] }}</td>
-                            <td>{{ $product['name'] . ' - ' . str_pad($product['product_variant_id'], 4, 0, STR_PAD_LEFT) }}</td>
-                            <td>{{ number_format($product['quantity'] / 100, 2, ',', '.') }}</td>
-                            <td>{{ number_format($product['unit_price'] / 100, 2, ',', '.') }}</td>
-                            <td>{{ number_format($product['total_price'] / 100, 2, ',', '.') }}</td>
-                            <td>
-                                <button wire:click="removeProduct({{ $product['index'] }})" wire:loading.attr="disabled" class="btn btn-xs btn-danger" wire:loading.attr="disabled">Remover</button>
-                            </td>
-                        </tr>
-                    @endif
+                @foreach ($orderItems as $product)
+                    <tr>
+                        <td>{{ $product['index'] }}</td>
+                        <td>{{ $product['name'] . ' - ' . str_pad($product['product_variant_id'], 4, 0, STR_PAD_LEFT) }}</td>
+                        <td>{{ number_format($product['quantity'] / 100, 2, ',', '.') }}</td>
+                        <td>{{ number_format($product['unit_price'] / 100, 2, ',', '.') }}</td>
+                        <td>{{ number_format($product['total_price'] / 100, 2, ',', '.') }}</td>
+                        <td>
+                            <button wire:click="removeProduct({{ $product['index'] }})" class="btn btn-xs btn-danger" wire:loading.attr="disabled">Remover</button>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
     <div class="d-flex justify-content-between mt-2">
-        <button wire:click="finishTrial" class="btn btn-primary" @disabled($totalAmount == 0)>Atualizar Condicional</button>
+        <button wire:click="finishOrder" class="btn btn-primary" @disabled($totalAmount == 0)>Finalizar Condicional</button>
         <h4 class="m-0">Total R${{ number_format($totalAmount / 100, 2, ',', '.') }}</h4>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Product\ProductBrandController;
 use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductController;
@@ -38,5 +39,6 @@ Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::resource('/product-seasons', ProductSeasonController::class);
     Route::resource('/product-sizes', ProductSizeController::class);
     Route::resource('/trials', TrialController::class)->except(['store', 'update']);
+    Route::resource('/orders', OrderController::class)->except(['store', 'update']);
     Route::get('/stocks', [StockController::class, 'index'])->name('stocks.index');
 });
