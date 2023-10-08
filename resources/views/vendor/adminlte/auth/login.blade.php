@@ -26,8 +26,7 @@
 
         {{-- Username field --}}
         <div class="input-group mb-3">
-            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                value="{{ old('username') }}" placeholder="{{ __('adminlte::adminlte.username') }}" autofocus>
+            <input type="text" name="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username', 'admin') }}" placeholder="{{ __('adminlte::adminlte.username') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -44,8 +43,7 @@
 
         {{-- Password field --}}
         <div class="input-group mb-3">
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                placeholder="{{ __('adminlte::adminlte.password') }}">
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" value="admin" placeholder="{{ __('adminlte::adminlte.password') }}">
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -73,8 +71,7 @@
             </div>
 
             <div class="col-5">
-                <button type=submit
-                    class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
+                <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
                     <span class="fas fa-sign-in-alt"></span>
                     {{ __('adminlte::adminlte.sign_in') }}
                 </button>

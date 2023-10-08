@@ -1,7 +1,7 @@
 <div>
     <div class="form-group px-3 pt-2 pb-3 border">
         <label for="customer_id">Cliente</label>
-        <select wire:model="customer_id" name="customer_id" class="form-control @error('customer_id') is-invalid @enderror">
+        <select wire:model.live="customer_id" name="customer_id" class="form-control @error('customer_id') is-invalid @enderror">
             <option value="">-</option>
             @foreach ($customers as $customer)
                 <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -25,7 +25,7 @@
             <tbody>
                 <tr>
                     <td colspan="2">
-                        <select wire:model="product_variant_id" wire:change="updateSelectedProduct" name="product_variant_id" class="form-control form-control-sm">
+                        <select wire:model.live="product_variant_id" wire:change="updateSelectedProduct" name="product_variant_id" class="form-control form-control-sm">
                             <option value="">-</option>
                             @foreach ($products as $product)
                                 <optgroup label="{{ $product->name }}">
@@ -38,13 +38,13 @@
                         </select>
                     </td>
                     <td>
-                        <input wire:model="quantity" wire:change="updateSelectedProduct" type="number" step="any" name="quantity" class="form-control form-control-sm" autocomplete="off">
+                        <input wire:model.live="quantity" wire:change="updateSelectedProduct" type="number" step="any" name="quantity" class="form-control form-control-sm" autocomplete="off">
                     </td>
                     <td>
-                        <input wire:model.blur="unit_price" type="text" name="unit_price" class="form-control form-control-sm" disabled>
+                        <input wire:model.live.blur="unit_price" type="text" name="unit_price" class="form-control form-control-sm" disabled>
                     </td>
                     <td>
-                        <input wire:model.blur="total_price" type="text" name="total_price" class="form-control form-control-sm" disabled>
+                        <input wire:model.live.blur="total_price" type="text" name="total_price" class="form-control form-control-sm" disabled>
                     </td>
                     <td>
                         <button wire:click="addProduct" wire:loading.attr="disabled" class="btn btn-primary btn-xs text-nowrap">Adicionar Produto</button>

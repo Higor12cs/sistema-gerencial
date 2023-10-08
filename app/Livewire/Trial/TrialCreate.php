@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Trial;
+namespace App\Livewire\Trial;
 
 use App\Models\Customer;
 use App\Models\Product;
@@ -71,6 +71,8 @@ class TrialCreate extends Component
 
         $this->product_variant_id = null;
         $this->quantity = 1;
+        $this->unit_price = 0;
+        $this->total_price = 0;
     }
 
     public function removeProduct($index)
