@@ -107,7 +107,7 @@ return [
     */
 
     'preloader' => [
-        'enabled' => true,
+        'enabled' => false,
         'img' => [
             'path' => 'vendor/adminlte/dist/img/Logo.png',
             'alt' => 'Preloader Image',
@@ -323,6 +323,8 @@ return [
             'text' => 'Vendas',
             'icon' => 'fas fa-fw fa-basket-shopping',
             'route' => 'app.orders.index',
+            'label' => 'Novo Feature',
+            'label_color' => 'success',
         ],
         [
             'text' => 'Condicionais',

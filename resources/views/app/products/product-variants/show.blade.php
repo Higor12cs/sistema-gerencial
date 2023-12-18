@@ -45,8 +45,29 @@
                 </x-adminlte-select>
             </div>
 
-            <a href="{{ route('app.product-variants.edit', $productVariant) }}"
-                class="btn btn-primary mt-2">{{ __('Editar Variação') }}</a>
+            <div class="d-flex justify-content-between">
+                <a href="{{ route('app.product-variants.edit', $productVariant) }}"
+                    class="btn btn-primary mt-2">{{ __('Editar Variação') }}</a>
+                <form id="delete-form" action="{{ route('app.product-variants.destroy', $productVariant) }}"
+                    method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button id="delete-button" type="submit" class="btn btn-danger">{{ __('Excluir Variação') }}</button>
+                </form>
+            </div>
         </div>
     </div>
 @stop
+
+@section('adminlte_js')
+    <script>
+        $(function() {
+            $("#delete-button").click(function() {
+                event.preventDefault();
+                if (confirm("Deseja realmente excluir a variação?")) {
+                    $('form#delete-form').submit();
+                }
+            });
+        });
+    </script>
+@endsection

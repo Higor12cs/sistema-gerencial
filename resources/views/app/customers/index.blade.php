@@ -17,7 +17,7 @@
         $btnShow = '<a href="' . route('app.customers.show', $customer) . '" class="btn btn-xs btn-default mx-1" title="Visualizar"><i class="fa fa-lg fa-fw fa-eye"></i></a>';
         $btnEdit = '<a href="' . route('app.customers.edit', $customer) . '" class="btn btn-xs btn-default mx-1" title="Editar"><i class="fa fa-lg fa-fw fa-pen"></i></a>';
 
-        $customersData[] = [$customer->id, $customer->name, $customer->address, $customer->number, $customer->phone1, '<nobr>' . $btnShow . $btnEdit . '</nobr>'];
+        $customersData[] = [str_pad($customer->id, 5, '0', STR_PAD_LEFT), $customer->name, $customer->address, $customer->number, $customer->phone1, '<nobr>' . $btnShow . $btnEdit . '</nobr>'];
     }
 
     $config = [

@@ -56,8 +56,9 @@ class ProductVariantController extends Controller
             ->with('success', __('Variaçao atualizada com sucesso!'));
     }
 
-    public function destroy(ProductVariant $productVariant)
+    public function destroy(ProductVariant $productVariant): RedirectResponse
     {
-        //
+        $productVariant->delete();
+        return to_route('app.products.edit', $productVariant->product)->with('success', __('Variação excluída com sucesso!'));
     }
 }

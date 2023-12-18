@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\ProductBrand;
 use App\Models\ProductCategory;
 use App\Models\ProductSeason;
+use App\Models\ProductSize;
 use App\Models\ProductVariant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -34,8 +35,14 @@ class ProductController extends Controller
         $productBrands = ProductBrand::where('active', true)->orderBy('name')->get();
         $productCategories = ProductCategory::where('active', true)->orderBy('name')->get();
         $productSeasons = ProductSeason::where('active', true)->orderBy('name')->get();
+        $productSizes = ProductSize::where('active', true)->orderBy('name')->get();
 
-        return view('app.products.products.create', compact('productBrands', 'productCategories', 'productSeasons'));
+        return view('app.products.products.create', compact(
+            'productBrands',
+            'productCategories',
+            'productSeasons',
+            'productSizes'
+        ));
     }
 
     public function store(ProductRequest $request): RedirectResponse
@@ -74,6 +81,11 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        //
+        if ($product->isUsed()) {
+            return redirect()->back()->with('danger', __('Este produto já foi utilizado e não pode ser excluído.'));
+        }
+
+        $product->delete();
+        return to_route('app.products.index')->with('success', __('Produto atualizado com sucesso!'));
     }
 }

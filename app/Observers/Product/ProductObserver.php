@@ -9,9 +9,9 @@ class ProductObserver
 {
     public function created(Product $product): void
     {
-        ProductVariant::create([
-            'product_id' => $product->id,
-            'product_size_id' => 1,
-        ]);
+        // ProductVariant::create([
+        //     'product_id' => $product->id,
+        //     'product_size_id' => 1,
+        // ]);
     }
 }

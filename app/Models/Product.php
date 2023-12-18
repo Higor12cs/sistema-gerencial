@@ -34,6 +34,17 @@ class Product extends Model
         });
     }
 
+    public function isUsed(): bool
+    {
+        foreach ($this->productVariants as $variant) {
+            if ($variant->isUsed()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public function productBrand(): BelongsTo
     {
         return $this->belongsTo(ProductBrand::class);

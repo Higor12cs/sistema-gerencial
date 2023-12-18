@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductVariant extends Model
@@ -16,6 +17,7 @@ class ProductVariant extends Model
         'product_size_id',
         'sku',
         'barcode',
+        'cost',
         'price',
         'active',
         'created_by',
@@ -32,6 +34,21 @@ class ProductVariant extends Model
         static::creating(function ($productSeason) {
             $productSeason->created_by = auth()->id();
         });
+    }
+
+    public function isUsed(): bool
+    {
+        return $this->trialItems()->withTrashed()->exists() || $this->orderItems()->withTrashed()->exists();
+    }
+
+    public function trialItems(): HasMany
+    {
+        return $this->hasMany(TrialItem::class);
+    }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(OrderItem::class);
     }
 
     public function product(): BelongsTo
