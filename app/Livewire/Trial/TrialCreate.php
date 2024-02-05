@@ -4,7 +4,6 @@ namespace App\Livewire\Trial;
 
 use App\Models\Customer;
 use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Models\Stock;
 use App\Models\Trial;
 use App\Models\TrialItem;
@@ -26,7 +25,7 @@ class TrialCreate extends Component
 
     public $customer_id;
 
-    public $product_variant_id;
+    public $product_id;
 
     public $quantity = 1;
 
@@ -38,8 +37,7 @@ class TrialCreate extends Component
     {
         $this->customers = Customer::orderBy('name')->get();
         $this->products = Product::where('active', true)
-            ->with('productVariants')
-            ->with('productVariants.productSize')
+            ->with('productSize')
             ->orderBy('name')
             ->get();
     }
@@ -51,25 +49,25 @@ class TrialCreate extends Component
 
     public function addProduct()
     {
-        if (is_null($this->product_variant_id) || $this->product_variant_id == '') {
+        if (is_null($this->product_id) || $this->product_id == '') {
             return;
         }
 
-        $productVariant = ProductVariant::findOrFail($this->product_variant_id);
+        $product = Product::findOrFail($this->product_id);
 
         $this->trialItems[] = [
             'index' => $this->index,
-            'product_variant_id' => $productVariant->id,
-            'name' => $productVariant->product->name,
+            'product_id' => $product->id,
+            'name' => $product->name,
             'quantity' => $this->quantity * 100,
-            'unit_price' => $productVariant->price,
-            'total_price' => $productVariant->price * $this->quantity,
+            'unit_price' => $product->price,
+            'total_price' => $product->price * $this->quantity,
         ];
 
-        $this->totalAmount += $productVariant->price * $this->quantity;
+        $this->totalAmount += $product->price * $this->quantity;
         $this->index++;
 
-        $this->product_variant_id = null;
+        $this->product_id = null;
         $this->quantity = 1;
         $this->unit_price = 0;
         $this->total_price = 0;
@@ -101,7 +99,7 @@ class TrialCreate extends Component
         foreach ($this->trialItems as $product) {
             $newTrialProducts[] = [
                 'index' => $currentIndex,
-                'product_variant_id' => $product['product_variant_id'],
+                'product_id' => $product['product_id'],
                 'name' => $product['name'],
                 'quantity' => $product['quantity'],
                 'unit_price' => $product['unit_price'],
@@ -116,17 +114,17 @@ class TrialCreate extends Component
 
     public function updateSelectedProduct()
     {
-        $productVariant = ProductVariant::find($this->product_variant_id);
+        $product = Product::find($this->product_id);
 
-        if (! $productVariant) {
+        if (! $product) {
             $this->unit_price = 0;
             $this->total_price = 0;
 
             return;
         }
 
-        $this->unit_price = number_format($productVariant->price / 100, 2, ',', '.');
-        $this->total_price = number_format(($productVariant->price * $this->quantity) / 100, 2, ',', '.');
+        $this->unit_price = number_format($product->price / 100, 2, ',', '.');
+        $this->total_price = number_format(($product->price * $this->quantity) / 100, 2, ',', '.');
     }
 
     public function finishTrial()
@@ -152,13 +150,13 @@ class TrialCreate extends Component
             foreach ($this->trialItems as $item) {
                 TrialItem::create([
                     'trial_id' => $trial->id,
-                    'product_variant_id' => $item['product_variant_id'],
+                    'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                     'unit_price' => $item['unit_price'],
                     'total_price' => $item['total_price'],
                 ]);
 
-                Stock::where('product_variant_id', $item['product_variant_id'])->update([
+                Stock::where('product_id', $item['product_id'])->update([
                     'quantity_on_trials' => DB::raw('quantity_on_trials - '.$item['quantity']),
                 ]);
             }

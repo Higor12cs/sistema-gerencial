@@ -23,8 +23,6 @@ class OrderController extends Controller
     {
         $customers = Customer::where('active', true)->get();
         $products = Product::where('active', true)
-            ->with('productVariants')
-            ->with('productVariants.productSize')
             ->orderBy('name')
             ->get();
 
@@ -34,8 +32,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $orderItems = OrderItem::where('order_id', $order->id)
-            ->with('productVariant')
-            ->with('productVariant.product')
+            ->with('product')
             ->get();
 
         return view('app.orders.show', compact('order', 'orderItems'));
@@ -44,8 +41,8 @@ class OrderController extends Controller
     public function edit(Order $order): View
     {
         $customers = Customer::all();
-        $products = Product::with('productVariants')
-            ->with('productVariants.productSize')
+        $products = Product::query()
+            ->with('productSize')
             ->orderBy('name')
             ->get();
 

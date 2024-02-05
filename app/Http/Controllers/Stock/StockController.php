@@ -13,16 +13,14 @@ class StockController extends Controller
         $products = Product::select('products.*')
             ->with('productBrand', 'productCategory', 'productSeason')
             ->selectSub(function ($query) {
-                $query->selectRaw('SUM(stocks.quantity)')
-                    ->from('product_variants')
-                    ->join('stocks', 'product_variants.id', '=', 'stocks.product_variant_id')
-                    ->whereColumn('product_variants.product_id', 'products.id');
+                $query->selectRaw('SUM(current_stock.quantity)')
+                    ->from('stocks as current_stock')
+                    ->whereColumn('current_stock.product_id', '=', 'products.id');
             }, 'total_stock')
             ->selectSub(function ($query) {
-                $query->selectRaw('SUM(stocks.quantity_on_trials)')
-                    ->from('product_variants')
-                    ->join('stocks', 'product_variants.id', '=', 'stocks.product_variant_id')
-                    ->whereColumn('product_variants.product_id', 'products.id');
+                $query->selectRaw('SUM(trials_stock.quantity_on_trials)')
+                    ->from('stocks as trials_stock')
+                    ->whereColumn('trials_stock.product_id', '=', 'products.id');
             }, 'total_on_trials')
             ->get();
 

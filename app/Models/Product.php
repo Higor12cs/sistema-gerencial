@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -17,6 +16,11 @@ class Product extends Model
         'product_brand_id',
         'product_category_id',
         'product_season_id',
+        'product_size_id',
+        'sku',
+        'barcode',
+        'cost',
+        'price',
         'active',
         'created_by',
     ];
@@ -34,17 +38,6 @@ class Product extends Model
         });
     }
 
-    public function isUsed(): bool
-    {
-        foreach ($this->productVariants as $variant) {
-            if ($variant->isUsed()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
     public function productBrand(): BelongsTo
     {
         return $this->belongsTo(ProductBrand::class);
@@ -60,9 +53,9 @@ class Product extends Model
         return $this->belongsTo(ProductSeason::class);
     }
 
-    public function productVariants(): HasMany
+    public function productSize(): BelongsTo
     {
-        return $this->hasMany(ProductVariant::class);
+        return $this->belongsTo(ProductSize::class);
     }
 
     public function createdBy(): BelongsTo

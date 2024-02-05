@@ -8,7 +8,6 @@ use App\Http\Controllers\Product\ProductCategoryController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductSeasonController;
 use App\Http\Controllers\Product\ProductSizeController;
-use App\Http\Controllers\Product\ProductVariantController;
 use App\Http\Controllers\Stock\StockController;
 use App\Http\Controllers\Trial\TrialController;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +32,6 @@ Route::middleware('auth')->prefix('/app')->as('app.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::resource('/customers', CustomerController::class);
     Route::resource('/products', ProductController::class);
-    Route::resource('/product-variants', ProductVariantController::class);
     Route::resource('/product-brands', ProductBrandController::class);
     Route::resource('/product-categories', ProductCategoryController::class);
     Route::resource('/product-seasons', ProductSeasonController::class);

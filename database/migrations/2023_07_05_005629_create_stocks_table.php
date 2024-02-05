@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_variant_id')->constrained();
+            $table->foreignId('product_id')->constrained();
             $table->bigInteger('quantity')->default(0);
             $table->bigInteger('quantity_on_trials')->default(0);
             $table->string('location')->nullable();

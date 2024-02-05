@@ -16,13 +16,13 @@
 
 @push('js')
     <script>
-        var $successAlert = $("#success-alert");
+        let $successAlert = $("#success-alert");
 
         function hideAlert() {
             $successAlert.slideUp(500);
         }
 
-        var timer = setTimeout(hideAlert, 4000);
+        let timer = setTimeout(hideAlert, 4000);
 
         $successAlert.on("mouseenter", function() {
             clearTimeout(timer);

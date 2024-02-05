@@ -22,7 +22,7 @@
             </div>
 
             <div class="row">
-                <x-adminlte-select name="product_brand_id" label="{{ __('Marca') }}" fgroup-class="col-lg-4" disabled>
+                <x-adminlte-select name="product_brand_id" label="{{ __('Marca') }}" fgroup-class="col-md-6" disabled>
                     <option value="">{{ __('-') }}</option>
                     @foreach ($productBrands as $productBrand)
                         <option value="{{ $productBrand->id }}" @if ($productBrand->id === $product->product_brand_id) selected @endif>
@@ -30,7 +30,7 @@
                     @endforeach
                 </x-adminlte-select>
 
-                <x-adminlte-select name="product_category_id" label="{{ __('Categoria') }}" fgroup-class="col-lg-4"
+                <x-adminlte-select name="product_category_id" label="{{ __('Categoria') }}" fgroup-class="col-md-6"
                     disabled>
                     <option value="">{{ __('-') }}</option>
                     @foreach ($productCategories as $productCategory)
@@ -38,12 +38,22 @@
                             {{ $productCategory->name }}</option>
                     @endforeach
                 </x-adminlte-select>
+            </div>
 
-                <x-adminlte-select name="product_season_id" label="{{ __('Temporada') }}" fgroup-class="col-lg-4" disabled>
+            <div class="row">
+                <x-adminlte-select name="product_season_id" label="{{ __('Temporada') }}" fgroup-class="col-md-6" disabled>
                     <option value="">{{ __('-') }}</option>
                     @foreach ($productSeasons as $productSeason)
                         <option value="{{ $productSeason->id }}" @if ($productSeason->id === $product->product_season_id) selected @endif>
                             {{ $productSeason->name }}</option>
+                    @endforeach
+                </x-adminlte-select>
+
+                <x-adminlte-select name="product_season_id" label="{{ __('Tamanho') }}" fgroup-class="col-md-6" disabled>
+                    <option value="">{{ __('-') }}</option>
+                    @foreach ($productSizes as $productSize)
+                        <option value="{{ $productSize->id }}" @if ($productSize->id === $product->product_size_id) selected @endif>
+                            {{ $productSize->name }}</option>
                     @endforeach
                 </x-adminlte-select>
             </div>
@@ -56,42 +66,6 @@
                     <option value="0" @if (!$product->active) selected @endif>{{ __('Desativado') }}
                     </option>
                 </x-adminlte-select>
-            </div>
-
-            <div class="table-responsive mt-2 q">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <th class="col-1">{{ __('Código') }}</th>
-                        <th class="col-9">{{ __('Tamanho') }}</th>
-                        <th class="col-1">{{ __('Ativo') }}</th>
-                        <th class="col-1">{{ __('Ações') }}</th>
-                    </thead>
-                    <tbody>
-                        @foreach ($productVariants as $variant)
-                            <tr>
-                                <td>{{ $variant->id }}</td>
-                                <td>{{ $variant->productSize->name }}</td>
-                                <td>
-                                    @if ($variant->active)
-                                        <span class="badge badge-success">Ativo</span>
-                                    @else
-                                        <span class="badge badge-danger">Desativado</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="text-nowrap">
-                                        <a href="{{ route('app.product-variants.show', $variant) }}"
-                                            class="btn btn-xs btn-default mx-1" title="Visualizar"><i
-                                                class="fa fa-lg fa-fw fa-eye"></i></a>
-                                        <a href="{{ route('app.product-variants.edit', $variant) }}"
-                                            class="btn btn-xs btn-default mx-1" title="Editar"><i
-                                                class="fa fa-lg fa-fw fa-pen"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
 
             <div class="d-flex justify-content-between mt-2">

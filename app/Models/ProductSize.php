@@ -36,8 +36,8 @@ class ProductSize extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function productVariants(): HasMany
+    public function products(): HasMany
     {
-        return $this->hasMany(ProductVariant::class);
+        return $this->hasMany(Product::class);
     }
 }

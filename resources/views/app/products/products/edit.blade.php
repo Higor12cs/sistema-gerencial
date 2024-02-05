@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="row">
-                    <x-adminlte-select name="product_brand_id" label="{{ __('Marca') }}" fgroup-class="col-lg-4">
+                    <x-adminlte-select name="product_brand_id" label="{{ __('Marca') }}" fgroup-class="col-md-6">
                         <option value="">{{ __('-- selecione --') }}</option>
                         @foreach ($productBrands as $productBrand)
                             <option value="{{ $productBrand->id }}" @if ($productBrand->id === $product->product_brand_id) selected @endif
@@ -35,7 +35,7 @@
                         @endforeach
                     </x-adminlte-select>
 
-                    <x-adminlte-select name="product_category_id" label="{{ __('Categoria') }}" fgroup-class="col-lg-4">
+                    <x-adminlte-select name="product_category_id" label="{{ __('Categoria') }}" fgroup-class="col-md-6">
                         <option value="">{{ __('-- selecione --') }}</option>
                         @foreach ($productCategories as $productCategory)
                             <option value="{{ $productCategory->id }}" @if ($productCategory->id === $product->product_category_id) selected @endif
@@ -43,8 +43,10 @@
                                 {{ $productCategory->name }}</option>
                         @endforeach
                     </x-adminlte-select>
+                </div>
 
-                    <x-adminlte-select name="product_season_id" label="{{ __('Temporada') }}" fgroup-class="col-lg-4">
+                <div class="row">
+                    <x-adminlte-select name="product_season_id" label="{{ __('Temporada') }}" fgroup-class="col-md-6">
                         <option value="">{{ __('-- selecione --') }}</option>
                         @foreach ($productSeasons as $productSeason)
                             <option value="{{ $productSeason->id }}" @if ($productSeason->id === $product->product_season_id) selected @endif
@@ -52,6 +54,25 @@
                                 {{ $productSeason->name }}</option>
                         @endforeach
                     </x-adminlte-select>
+
+                    <x-adminlte-select name="product_size_id" label="{{ __('Tamanho') }}" fgroup-class="col-md-6">
+                        <option value="">{{ __('-- selecione --') }}</option>
+                        @foreach ($productSizes as $productSize)
+                            <option value="{{ $productSize->id }}" @if ($productSize->id === $product->product_size_id) selected @endif
+                                enable-old-support>
+                                {{ $productSize->name }}</option>
+                        @endforeach
+                    </x-adminlte-select>
+                </div>
+
+                <div class="row">
+                    <x-adminlte-input name="cost" type="number" step="any" label="{{ __('Custo') }}"
+                        placeholder="{{ __('Custo') }}" fgroup-class="col-md-6" value="{{ $product->cost / 100 }}"
+                        enable-old-support autocomplete="off" />
+
+                    <x-adminlte-input name="price" type="number" step="any" label="{{ __('Preço') }}"
+                        placeholder="{{ __('Preço') }}" fgroup-class="col-md-6" value="{{ $product->price / 100 }}"
+                        enable-old-support autocomplete="off" />
                 </div>
 
                 <div class="row">
@@ -64,47 +85,7 @@
                     </x-adminlte-select>
                 </div>
 
-                <div class="table-responsive mt-2 q">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <th class="col-1">{{ __('Código') }}</th>
-                            <th class="col-9">{{ __('Tamanho') }}</th>
-                            <th class="col-1">{{ __('Ativo') }}</th>
-                            <th class="col-1">{{ __('Ações') }}</th>
-                        </thead>
-                        <tbody>
-                            @foreach ($productVariants as $variant)
-                                <tr>
-                                    <td>{{ $variant->id }}</td>
-                                    <td>{{ $variant->productSize->name }}</td>
-                                    <td>
-                                        @if ($variant->active)
-                                            <span class="badge badge-success">Ativo</span>
-                                        @else
-                                            <span class="badge badge-danger">Desativado</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="text-nowrap">
-                                            <a href="{{ route('app.product-variants.show', $variant) }}"
-                                                class="btn btn-xs btn-default mx-1" title="Visualizar"><i
-                                                    class="fa fa-lg fa-fw fa-eye"></i></a>
-                                            <a href="{{ route('app.product-variants.edit', $variant) }}"
-                                                class="btn btn-xs btn-default mx-1" title="Editar"><i
-                                                    class="fa fa-lg fa-fw fa-pen"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="d-flex justify-content-between mt-2">
-                    <button type="submit" class="btn btn-primary">{{ __('Salvar Produto') }}</button>
-                    <a href="{{ route('app.product-variants.create', ['product_id' => $product->id]) }}"
-                        class="btn btn-primary">{{ __('Nova Variação') }}</a>
-                </div>
+                <button type="submit" class="btn btn-primary mt-2">{{ __('Salvar Produto') }}</button>
             </form>
         </div>
     </div>

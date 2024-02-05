@@ -26,19 +26,16 @@
             <tbody>
                 <tr>
                     <td colspan="2">
-                        <select wire:model.live="product_variant_id" wire:change="updateSelectedProduct"
-                            name="product_variant_id" class="form-control form-control-sm">
+                        <select wire:model.live="product_id" wire:change="updateSelectedProduct" name="product_id"
+                            class="form-control form-control-sm">
                             <option value="">-</option>
                             @foreach ($products as $product)
-                                <optgroup label="{{ $product->name }}">
-                                    @foreach ($product->productVariants as $productVariant)
-                                        <option value="{{ $productVariant->id }}">
-                                            {{ $product->name . ' - ' . str_pad($productVariant->id, 5, '0', STR_PAD_LEFT) }}
-                                            |
-                                            {{ __('Tamanho') . ': ' . $productVariant->productSize?->name }} |
-                                            {{ __('Preço') . ': ' . number_format($productVariant->price / 100, 2, ',', '.') }}
-                                        </option>
-                                    @endforeach
+                                <option value="{{ $product->id }}">
+                                    {{ $product->name . ' - ' . str_pad($product->id, 5, '0', STR_PAD_LEFT) }}
+                                    |
+                                    {{ __('Tamanho') . ': ' . $product->productSize?->name }} |
+                                    {{ __('Preço') . ': ' . number_format($product->price / 100, 2, ',', '.') }}
+                                </option>
                             @endforeach
                         </select>
                     </td>
@@ -62,7 +59,7 @@
                 @foreach ($orderItems as $product)
                     <tr>
                         <td>{{ $product['index'] }}</td>
-                        <td>{{ $product['name'] . ' - ' . str_pad($product['product_variant_id'], 4, 0, STR_PAD_LEFT) }}
+                        <td>{{ $product['name'] . ' - ' . str_pad($product['product_id'], 4, 0, STR_PAD_LEFT) }}
                         </td>
                         <td>{{ number_format($product['quantity'] / 100, 2, ',', '.') }}</td>
                         <td>{{ number_format($product['unit_price'] / 100, 2, ',', '.') }}</td>

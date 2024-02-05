@@ -14,6 +14,8 @@ class ProductRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
+            'cost' => $this->cost * 100,
+            'price' => $this->price * 100,
             'name' => \Illuminate\Support\Str::upper($this->name),
         ]);
     }
@@ -25,6 +27,11 @@ class ProductRequest extends FormRequest
             'product_brand_id' => ['nullable', 'exists:product_brands,id'],
             'product_category_id' => ['nullable', 'exists:product_categories,id'],
             'product_season_id' => ['nullable', 'exists:product_seasons,id'],
+            'product_size_id' => ['nullable', 'exists:product_sizes,id'],
+            'sku' => ['nullable'],
+            'barcode' => ['nullable'],
+            'cost' => ['required'],
+            'price' => ['required'],
             'active' => ['sometimes', 'boolean'],
         ];
     }
@@ -45,6 +52,11 @@ class ProductRequest extends FormRequest
             'product_brand_id' => 'marca',
             'product_category_id' => 'categoria',
             'product_season_id' => 'estação',
+            'product_size_id' => 'tamanho',
+            'sku' => 'SKU',
+            'barcode' => 'código de barras',
+            'cost' => 'custo',
+            'price' => 'preço',
             'active' => 'ativo',
         ];
     }

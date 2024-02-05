@@ -48,7 +48,7 @@ class ProductSizeController extends Controller
 
     public function destroy(ProductSize $productSize)
     {
-        if ($productSize->productVariants->count()) {
+        if ($productSize->products->count()) {
             return to_route('app.product-sizes.show', $productSize)->with('warning', __('Não foi possível excluir a categoria. Ainda existem produtos vinculados a ela.'));
         }
 

@@ -12,14 +12,14 @@ class Stock extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'product_variant_id',
+        'product_id',
         'quantity',
         'quantity_on_trials',
         'location',
     ];
 
-    public function productVariant(): BelongsTo
+    public function product(): BelongsTo
     {
-        return $this->belongsTo(ProductVariant::class);
+        return $this->belongsTo(Product::class);
     }
 }

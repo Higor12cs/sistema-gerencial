@@ -23,8 +23,6 @@ class TrialController extends Controller
     {
         $customers = Customer::where('active', true)->get();
         $products = Product::where('active', true)
-            ->with('productVariants')
-            ->with('productVariants.productSize')
             ->orderBy('name')
             ->get();
 
@@ -34,8 +32,7 @@ class TrialController extends Controller
     public function show(Trial $trial)
     {
         $trialItems = TrialItem::where('trial_id', $trial->id)
-            ->with('productVariant')
-            ->with('productVariant.product')
+            ->with('product')
             ->get();
 
         return view('app.trials.show', compact('trial', 'trialItems'));
@@ -44,8 +41,8 @@ class TrialController extends Controller
     public function edit(Trial $trial): View
     {
         $customers = Customer::all();
-        $products = Product::with('productVariants')
-            ->with('productVariants.productSize')
+        $products = Product::query()
+            ->with('productSize')
             ->orderBy('name')
             ->get();
 

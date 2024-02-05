@@ -1,7 +1,8 @@
 <div>
     <div class="form-group px-3 pt-2 pb-3 border">
         <label for="customer_id">Cliente</label>
-        <select wire:model.live="customer_id" name="customer_id" class="form-control @error('customer_id') is-invalid @enderror">
+        <select wire:model.live="customer_id" name="customer_id"
+            class="form-control @error('customer_id') is-invalid @enderror">
             <option value="">-</option>
             @foreach ($customers as $customer)
                 <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -25,41 +26,45 @@
             <tbody>
                 <tr>
                     <td colspan="2">
-                        <select wire:model.live="product_variant_id" wire:change="updateSelectedProduct" name="product_variant_id" class="form-control form-control-sm">
+                        <select wire:model.live="product_id" wire:change="updateSelectedProduct" name="product_id"
+                            class="form-control form-control-sm">
                             <option value="">-</option>
                             @foreach ($products as $product)
-                                <optgroup label="{{ $product->name }}">
-                                    @foreach ($product->productVariants as $productVariant)
-                                        <option value="{{ $productVariant->id }}">{{ $product->name }} -
-                                            [{{ $productVariant->productSize->name }}]
-                                        </option>
-                                    @endforeach
+                                <option value="{{ $product->id }}">{{ $product->name }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <input wire:model.live="quantity" wire:change="updateSelectedProduct" type="number" step="any" name="quantity" class="form-control form-control-sm" autocomplete="off">
+                        <input wire:model.live="quantity" wire:change="updateSelectedProduct" type="number"
+                            step="any" name="quantity" class="form-control form-control-sm" autocomplete="off">
                     </td>
                     <td>
-                        <input wire:model.live.blur="unit_price" type="text" name="unit_price" class="form-control form-control-sm" disabled>
+                        <input wire:model.live.blur="unit_price" type="text" name="unit_price"
+                            class="form-control form-control-sm" disabled>
                     </td>
                     <td>
-                        <input wire:model.live.blur="total_price" type="text" name="total_price" class="form-control form-control-sm" disabled>
+                        <input wire:model.live.blur="total_price" type="text" name="total_price"
+                            class="form-control form-control-sm" disabled>
                     </td>
                     <td>
-                        <button wire:click="addProduct" wire:loading.attr="disabled" class="btn btn-primary btn-xs text-nowrap" wire:loading.attr="disabled">Adicionar Produto</button>
+                        <button wire:click="addProduct" wire:loading.attr="disabled"
+                            class="btn btn-primary btn-xs text-nowrap" wire:loading.attr="disabled">Adicionar
+                            Produto</button>
                     </td>
                 </tr>
                 @foreach ($trialItems as $product)
                     @if (!isset($product['deleted']) || !$product['deleted'])
                         <tr>
                             <td>{{ $product['index'] }}</td>
-                            <td>{{ $product['name'] . ' - ' . str_pad($product['product_variant_id'], 4, 0, STR_PAD_LEFT) }}</td>
+                            <td>{{ $product['name'] . ' - ' . str_pad($product['product_id'], 4, 0, STR_PAD_LEFT) }}
+                            </td>
                             <td>{{ number_format($product['quantity'] / 100, 2, ',', '.') }}</td>
                             <td>{{ number_format($product['unit_price'] / 100, 2, ',', '.') }}</td>
                             <td>{{ number_format($product['total_price'] / 100, 2, ',', '.') }}</td>
                             <td>
-                                <button wire:click="removeProduct({{ $product['index'] }})" wire:loading.attr="disabled" class="btn btn-xs btn-danger" wire:loading.attr="disabled">Remover</button>
+                                <button wire:click="removeProduct({{ $product['index'] }})"
+                                    wire:loading.attr="disabled" class="btn btn-xs btn-danger"
+                                    wire:loading.attr="disabled">Remover</button>
                             </td>
                         </tr>
                     @endif
@@ -69,7 +74,8 @@
     </div>
 
     <div class="d-flex justify-content-between mt-2">
-        <button wire:click="finishTrial" class="btn btn-primary" @disabled($totalAmount == 0)>Atualizar Condicional</button>
+        <button wire:click="finishTrial" class="btn btn-primary" @disabled($totalAmount == 0)>Atualizar
+            Condicional</button>
         <h4 class="m-0">Total R${{ number_format($totalAmount / 100, 2, ',', '.') }}</h4>
     </div>
 </div>

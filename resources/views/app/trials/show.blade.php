@@ -31,7 +31,8 @@
                         @foreach ($trialItems as $trialItem)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $trialItem->productVariant->product->name . ' - ' . str_pad($trialItem->product_variant_id, 4, 0, STR_PAD_LEFT) }}</td>
+                                <td>{{ $trialItem->product->name . ' - ' . str_pad($trialItem->product_variant_id, 4, 0, STR_PAD_LEFT) }}
+                                </td>
                                 <td>{{ number_format($trialItem->quantity / 100, 2, ',', '.') }}</td>
                                 <td>{{ number_format($trialItem->unit_price / 100, 2, ',', '.') }}</td>
                                 <td>{{ number_format($trialItem->total_price / 100, 2, ',', '.') }}</td>

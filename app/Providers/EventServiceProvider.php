@@ -3,9 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Observers\Product\ProductObserver;
-use App\Observers\Product\ProductVariantObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -30,7 +28,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Product::observe(ProductObserver::class);
-        ProductVariant::observe(ProductVariantObserver::class);
     }
 
     /**

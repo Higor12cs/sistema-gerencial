@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('trial_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trial_id')->constrained();
-            $table->foreignId('product_variant_id')->constrained();
+            $table->foreignId('product_id')->constrained();
             $table->bigInteger('quantity')->default(0);
             $table->bigInteger('quantity_returned')->default(0);
             $table->bigInteger('unit_price')->default(0);

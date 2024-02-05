@@ -6,7 +6,6 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Models\Stock;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +27,7 @@ class OrderEdit extends Component
 
     public $customer_id;
 
-    public $product_variant_id;
+    public $product_id;
 
     public $quantity = 1;
 
@@ -41,8 +40,7 @@ class OrderEdit extends Component
         $this->order = $order;
         $this->customers = Customer::orderBy('name')->get();
         $this->products = Product::where('active', true)
-            ->with('productVariants')
-            ->with('productVariants.productSize')
+            ->with('productSize')
             ->orderBy('name')
             ->get();
 
@@ -53,8 +51,8 @@ class OrderEdit extends Component
             return [
                 'id' => $item->id,
                 'index' => $index + 1,
-                'product_variant_id' => $item->product_variant_id,
-                'name' => $item->productVariant->product->name,
+                'product_id' => $item->product_id,
+                'name' => $item->product->name,
                 'quantity' => $item->quantity,
                 'unit_price' => $item->unit_price,
                 'total_price' => $item->total_price,
@@ -71,29 +69,29 @@ class OrderEdit extends Component
 
     public function addProduct()
     {
-        if (is_null($this->product_variant_id) || $this->product_variant_id == '') {
+        if (is_null($this->product_id) || $this->product_id == '') {
             $this->unit_price = 0;
             $this->total_price = 0;
 
             return;
         }
 
-        $productVariant = ProductVariant::findOrFail($this->product_variant_id);
+        $product = Product::findOrFail($this->product_id);
 
         $this->orderItems[] = [
             'id' => null,
             'index' => $this->index,
-            'product_variant_id' => $productVariant->id,
-            'name' => $productVariant->product->name,
+            'product_id' => $product->id,
+            'name' => $product->name,
             'quantity' => $this->quantity * 100,
-            'unit_price' => $productVariant->price,
-            'total_price' => $productVariant->price * $this->quantity,
+            'unit_price' => $product->price,
+            'total_price' => $product->price * $this->quantity,
         ];
 
-        $this->totalAmount += $productVariant->price * $this->quantity;
+        $this->totalAmount += $product->price * $this->quantity;
         $this->index++;
 
-        $this->product_variant_id = null;
+        $this->product_id = null;
         $this->quantity = 1;
     }
 
@@ -113,17 +111,17 @@ class OrderEdit extends Component
 
     public function updateSelectedProduct()
     {
-        $productVariant = ProductVariant::find($this->product_variant_id);
+        $product = Product::find($this->product_id);
 
-        if (! $productVariant) {
+        if (! $product) {
             $this->unit_price = 0;
             $this->total_price = 0;
 
             return;
         }
 
-        $this->unit_price = number_format($productVariant->price / 100, 2, ',', '.');
-        $this->total_price = number_format(($productVariant->price * $this->quantity) / 100, 2, ',', '.');
+        $this->unit_price = number_format($product->price / 100, 2, ',', '.');
+        $this->total_price = number_format(($product->price * $this->quantity) / 100, 2, ',', '.');
     }
 
     public function finishOrder()
@@ -164,11 +162,11 @@ class OrderEdit extends Component
                 } else {
                     OrderItem::create(array_merge($itemData, [
                         'order_id' => $this->order->id,
-                        'product_variant_id' => $item['product_variant_id'],
+                        'product_id' => $item['product_id'],
                     ]));
                 }
 
-                Stock::where('product_variant_id', $item['product_variant_id'])->update([
+                Stock::where('product_id', $item['product_id'])->update([
                     'quantity' => DB::raw('quantity - '.$item['quantity']),
                 ]);
             }

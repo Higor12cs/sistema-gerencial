@@ -9,7 +9,6 @@ use App\Models\ProductBrand;
 use App\Models\ProductCategory;
 use App\Models\ProductSeason;
 use App\Models\ProductSize;
-use App\Models\ProductVariant;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -19,12 +18,6 @@ class ProductController extends Controller
     {
         $products = Product::select('products.*')
             ->with('productBrand', 'productCategory', 'productSeason')
-            ->selectSub(function ($query) {
-                $query->selectRaw('SUM(stocks.quantity)')
-                    ->from('product_variants')
-                    ->join('stocks', 'product_variants.id', '=', 'stocks.product_variant_id')
-                    ->whereColumn('product_variants.product_id', 'products.id');
-            }, 'total_stock')
             ->get();
 
         return view('app.products.products.index', compact('products'));
@@ -49,7 +42,7 @@ class ProductController extends Controller
     {
         $product = Product::create($request->validated());
 
-        return to_route('app.products.edit', $product)->with('success', __('Produto criado com sucesso!'));
+        return to_route('app.products.index', $product)->with('success', __('Produto criado com sucesso!'));
     }
 
     public function show(Product $product): View
@@ -57,9 +50,9 @@ class ProductController extends Controller
         $productBrands = ProductBrand::where('active', true)->orderBy('name')->get();
         $productCategories = ProductCategory::where('active', true)->orderBy('name')->get();
         $productSeasons = ProductSeason::where('active', true)->orderBy('name')->get();
-        $productVariants = ProductVariant::where('product_id', $product->id)->get();
+        $productSizes = ProductSize::where('active', true)->orderBy('name')->get();
 
-        return view('app.products.products.show', compact('product', 'productBrands', 'productCategories', 'productSeasons', 'productVariants'));
+        return view('app.products.products.show', compact('product', 'productBrands', 'productCategories', 'productSeasons', 'productSizes'));
     }
 
     public function edit(Product $product): View
@@ -67,9 +60,9 @@ class ProductController extends Controller
         $productBrands = ProductBrand::where('active', true)->orderBy('name')->get();
         $productCategories = ProductCategory::where('active', true)->orderBy('name')->get();
         $productSeasons = ProductSeason::where('active', true)->orderBy('name')->get();
-        $productVariants = ProductVariant::where('product_id', $product->id)->get();
+        $productSizes = ProductSize::where('active', true)->orderBy('name')->get();
 
-        return view('app.products.products.edit', compact('product', 'productBrands', 'productCategories', 'productSeasons', 'productVariants'));
+        return view('app.products.products.edit', compact('product', 'productBrands', 'productCategories', 'productSeasons', 'productSizes'));
     }
 
     public function update(ProductRequest $request, Product $product): RedirectResponse
@@ -86,6 +79,7 @@ class ProductController extends Controller
         }
 
         $product->delete();
+
         return to_route('app.products.index')->with('success', __('Produto atualizado com sucesso!'));
     }
 }
