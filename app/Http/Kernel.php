@@ -63,5 +63,20 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'check.admin' => \App\Http\Middleware\CheckIsAdminMiddleware::class,
+        'tenant.header' => \App\Http\Middleware\SetTenantHeaderMiddleware::class,
+    ];
+
+    /**
+     * The priority-sorted list of middleware.
+     *
+     * This forces non-global middleware to always be in the given order.
+     *
+     * @var string[]
+     */
+    protected $middlewarePriority = [
+        \App\Http\Middleware\SetTenantHeaderMiddleware::class,
+        \App\Http\Middleware\CheckIsAdminMiddleware::class,
+        \Stancl\Tenancy\Middleware\InitializeTenancyByRequestData::class,
     ];
 }

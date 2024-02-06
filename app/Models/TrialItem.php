@@ -26,7 +26,7 @@ class TrialItem extends Model
         parent::boot();
 
         static::creating(function ($trialItem) {
-            $trialItem->created_by = auth()->id();
+            $trialItem->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

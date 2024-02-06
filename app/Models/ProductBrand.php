@@ -27,7 +27,7 @@ class ProductBrand extends Model
         parent::boot();
 
         static::creating(function ($productBrand) {
-            $productBrand->created_by = auth()->id();
+            $productBrand->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

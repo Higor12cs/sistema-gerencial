@@ -42,7 +42,7 @@ class Customer extends Model
         parent::boot();
 
         static::creating(function ($customer) {
-            $customer->created_by = auth()->id();
+            $customer->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

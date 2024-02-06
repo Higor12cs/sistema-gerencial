@@ -12,14 +12,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
-            'name' => 'Administrador',
+        \App\Models\CentralUser::factory()->create([
+            'name' => 'Admin',
             'username' => 'admin',
             'password' => bcrypt('admin'),
+            'is_admin' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
-
-        $this->call(ProductSizesSeeder::class);
-        $this->call(DefaultCustomerSeeder::class);
-        // $this->call(PerformanceCheckSeeder::class);
     }
 }

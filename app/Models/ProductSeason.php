@@ -27,7 +27,7 @@ class ProductSeason extends Model
         parent::boot();
 
         static::creating(function ($productSeason) {
-            $productSeason->created_by = auth()->id();
+            $productSeason->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

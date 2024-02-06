@@ -27,7 +27,7 @@ class ProductSize extends Model
         parent::boot();
 
         static::creating(function ($productSize) {
-            $productSize->created_by = auth()->id();
+            $productSize->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

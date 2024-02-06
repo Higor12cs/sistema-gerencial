@@ -27,7 +27,7 @@ class ProductCategory extends Model
         parent::boot();
 
         static::creating(function ($productCategory) {
-            $productCategory->created_by = auth()->id();
+            $productCategory->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

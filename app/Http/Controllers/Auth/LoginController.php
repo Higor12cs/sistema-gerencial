@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -22,18 +23,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
@@ -44,8 +35,28 @@ class LoginController extends Controller
         return 'username';
     }
 
-    public function authenticated(): RedirectResponse
+    protected function credentials(Request $request): array
     {
-        return to_route('app.dashboard.index')->with('success', 'Bem-vindo!');
+        $credentials = $request->only('tenant_code', $this->username(), 'password');
+
+        return $credentials;
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'tenant_code' => 'sometimes',
+            $this->username() => 'required|string',
+            'password' => 'required|string',
+        ]);
+    }
+
+    protected function authenticated(Request $request, $user): RedirectResponse
+    {
+        if ($user->is_admin) {
+            return to_route('admin.dashboard.index');
+        }
+
+        return to_route('app.dashboard.index');
     }
 }

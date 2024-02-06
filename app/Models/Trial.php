@@ -31,7 +31,7 @@ class Trial extends Model
         parent::boot();
 
         static::creating(function ($trial) {
-            $trial->created_by = auth()->id();
+            $trial->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 

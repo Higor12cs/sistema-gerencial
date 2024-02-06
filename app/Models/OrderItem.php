@@ -26,7 +26,7 @@ class OrderItem extends Model
         parent::boot();
 
         static::creating(function ($orderItem) {
-            $orderItem->created_by = auth()->id();
+            $orderItem->created_by = User::where('global_id', auth()->user()->global_id)->first()->id;
         });
     }
 
